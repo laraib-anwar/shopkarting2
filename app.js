@@ -186,6 +186,6 @@ app.use("/", indexRoutes);
 
 
 
-app.listen(env.process.port || 3000,function(){
+app.listen(env.process.PORT || 3000,function(){
     console.log("Ready to go");
 });
