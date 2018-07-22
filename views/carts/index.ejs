@@ -1,0 +1,59 @@
+<% include ../partials/header %>
+
+<body class = "index-cart">
+
+
+<div class = "container">
+
+    <header class = "jumbotron">
+        <div class = "container">
+            <h1 id = "head">Welcome to Shopping Cart.</h1>
+            <p>View our carts posted from different students... You can buy and sell the one which u like. So go ahead to get ur desired enginerring accessories</p>
+            <p><i class="fa fa-bell" aria-hidden="true"></i>Remember to sign up in order to post ur cart<i class="fa fa-bell" aria-hidden="true"></i></p>
+
+            <p>
+                <a class = "btn btn-primary btn-large" href = "/carts/new">Add new cart</a>
+            </p>
+            <p>
+                <form action = "/carts" method = "GET" class = "form-inline">
+                    <div class = "form-group">
+                        <input type = "text" name = "search" placeholder = "Cart search..." class = "form-control">
+                            <input type = "submit" value = "Search" class = "btn btn-primary">
+
+                        </div>
+                    </form>
+            </p>
+        </div>
+
+
+
+    </header>
+
+
+
+
+
+        <div class = "row text-center" style ="display:flex; flex-wrap: wrap;">
+        <% carts.forEach(function(cart){ %>
+        <div class = "col-md-3 col-sm-6">
+        <div class = "thumbnail">
+        <img src = "<%= cart.image %>">
+        <div class = "caption">
+        <h4><%= cart.name%></h4>
+        </div>
+        <p>
+        <a href = "/carts/<%= cart._id %>" class = "btn btn-primary">More info</a>
+            <strong>Rs.<%=cart.price%></strong>
+        </p>
+        </div>
+        </div>
+        <% }); %>
+    </div>
+
+
+
+
+
+</body>
+
+    <% include ../partials/footer %>

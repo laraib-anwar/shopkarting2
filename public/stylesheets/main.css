@@ -1,0 +1,114 @@
+.thumbnail img {
+    width: 100%;
+}
+
+
+
+
+
+
+.thumbnail {
+    padding: 5px;
+}
+
+.thumbnail .caption-full {
+    padding: 9px;
+}
+
+#delete-form {
+    display: inline;
+}
+
+#help {
+    padding: 30px;
+    letter-spacing: 2.5px ;
+    color: #1c8adb;
+    font-size: 20px;
+    border: 10px solid blue;
+
+}
+
+.help {
+    color: #f8e4e5
+}
+
+.edit-cart {
+    background: #EECDA3;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #EF629F, #EECDA3);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #EF629F, #EECDA3); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+}
+
+
+.show-cart {
+    background-color: whitesmoke;
+}
+
+
+.index-cart{
+    background: #4B79A1;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #283E51, #4B79A1);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #283E51, #4B79A1); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+}
+
+
+
+
+.new-cart {
+
+    background: #E0EAFC;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #CFDEF3, #E0EAFC);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #CFDEF3, #E0EAFC); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+
+}
+
+
+#head {
+    animation: type 4s steps(12);
+    overflow: hidden;
+    whitespace: nowrap;
+    font-family: consolas;
+    border-right: 4px solid white;
+    width: 12ch;
+
+}
+
+@keyframes type {
+    0% {
+        width: 0ch;
+    }
+    100% {
+        width: 12ch;
+    }
+}
+
+
+.profile{
+    text-align: center;
+}
+
+
+
+.profile-edit {
+    transform: translateX(30px);
+}
+
+
+
+
+
+
+
+
+
+.fa {
+    font-size: 50px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.fa:hover {
+    color: darkblue;
+}

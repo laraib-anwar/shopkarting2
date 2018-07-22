@@ -1,0 +1,114 @@
+<% include ../partials/header %>
+<body class = "show-cart">
+<header class = "jumbotron">
+<div class = "container">
+    <div class = "row">
+        <div class = "col-md-3">
+            <div class = "list-group">
+                <li class = "list-group-item active">Information about the product</li>
+
+            </div>
+        </div>
+        <div class ="col-md-9">
+            <div class ="thumbnail">
+                <img class ="img-responsive" src = "<%= cart.image %>">
+                    <div class ="caption-full">
+                        <h4 class ="pull-right">Rs.<%= cart.price %></h4>
+
+                        <h4><a><%= cart.name %></a></h4>
+                        <p><%= cart.description %></p>
+                        <p>
+                            <em>Submitted By: <a href = "/users/<%= cart.author.id %>"><%= cart.author.username %></a>, <%= moment(cart.createdAt).fromNow() %></em>
+                        </p>
+                        <% if(currentUser && cart.author.id.equals(currentUser._id)){%>
+                        <a class = "btn  btn-warning" href = "/carts/<%= cart._id %>/edit">Edit</a>
+                        <form id = "delete-form" action = "/carts/<%= cart._id %>?_method=DELETE" method = "POST">
+                        <button class = "btn btn-danger"">Delete</button>
+                        </form>
+                        <% }%>
+
+
+
+
+
+
+
+
+
+                    </div>
+            </div
+            </header>
+            <div class = "well">
+            <div class ="text-right">
+                <% if(currentUser && cart.author.id.equals(currentUser._id)){%>
+                <form action="/carts/<%= cart._id %>/comments" method="POST">
+                <div class="form-group">
+                <label for="text">Post your college details for the buyer to know you:</label>
+                <input class="form-control" id="text" type="text" name="text" placeholder="text">
+                </div>
+                <div class = "form-group">
+                <button class = "btn  btn-primary"> Submit! </button>
+                </div>
+                </form>
+
+                <% } else if(currentUser){%>
+                <form action="/carts/<%= cart._id %>/comments" method="POST">
+                <div class="form-group">
+                <label for="text">Ask the seller:</label>
+                <input class="form-control" id="text" type="text" name="text" placeholder="text">
+                </div>
+                <div class = "form-group">
+                <button class = "btn  btn-primary"> Submit! </button>
+                </div>
+                </form>
+
+                <% } else {%>
+                <div class="form-group">
+                <label for="text">Get logged in inorder to comment</label>
+                </div>
+                <% } %>
+
+
+
+
+
+            </div>
+            <hr>
+                <% cart.comments.forEach(function(comment){%>
+                <div class = "row">
+                <div class ="col-md-12">
+
+                <strong><%= comment.author.username %></strong>
+                <span class = "pull-right"><%= moment(comment.createdAt).format('lll')%></span>
+                <p>
+                <%= comment.text %>
+                </p>
+
+                <% if(currentUser && comment.author.id.equals(currentUser._id)){%>
+                <form id = "delete-form" action = "/carts/<%= cart._id %>/comments/<%= comment._id %>?_method=DELETE" method = "POST">
+                <input type = "submit" class = "btn btn-xs btn-danger" value = "Delete">
+                </form>
+                <% }%>
+                <hr>
+
+
+                </div>
+                </div>
+                <%})%>
+                </hr>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+</body>
+<% include ../partials/footer %>
+
+
+
