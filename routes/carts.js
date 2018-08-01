@@ -1,5 +1,6 @@
 var express = require("express");
 var router = express.Router();
+var User = require("../models/user");
 var Cart = require("../models/cart");
 var middleware = require("../middleware");
 var request = require("request");
@@ -16,19 +17,19 @@ var imageFilter = function (req, file, cb) {
     }
     cb(null, true);
 };
-var upload = multer({ storage: storage, fileFilter: imageFilter})
+var upload = multer({ storage: storage, fileFilter: imageFilter});
 
 var cloudinary = require('cloudinary');
 cloudinary.config({
-    cloud_name: 'dtjn1orb0',
-    api_key: "789532569495242",
-    api_secret: "DUGsVTcR0VKVWBI0WJDdfxqKY08"
+    cloud_name: 'dr9yqriaj',
+    api_key: "864994674368474",
+    api_secret: "4GMo98OrAC7WsQ7Eu5ghPAv0q3w"
 });
 
 
 
 //INDEX - SHOW ALL CARTS
-router.get("/",function(req,res){
+router.get("/",function(req, res){
     if(req.query.search){
         const regex = new RegExp(escapeRegex(req.query.search),"gi");
         //Get all carts from db
@@ -61,10 +62,6 @@ router.get("/",function(req,res){
 
 
 
-
-
-
-
 //CREATE - ADD NEW CART TO DB
 router.post("/", middleware.isLoggedIn, upload.single('image'), function(req, res) {
     cloudinary.uploader.upload(req.file.path, function(result) {
@@ -74,7 +71,7 @@ router.post("/", middleware.isLoggedIn, upload.single('image'), function(req, re
         req.body.cart.author = {
             id: req.user._id,
             username: req.user.username
-        }
+        };
         Cart.create(req.body.cart, function(err, cart) {
             if (err) {
                 req.flash('error', err.message);
@@ -104,9 +101,8 @@ router.get("/new", middleware.isLoggedIn, function (req,res){
 
 //SHOW CART  -shows more info about one CART
 
-router.get("/:id", function(req,res){
+router.get("/:id", function(req,res) {
     //find the cart with unique id
-
     Cart.findById(req.params.id).populate("comments").exec(function(err, foundCart){
         if(err || !foundCart)
         {
@@ -121,6 +117,37 @@ router.get("/:id", function(req,res){
     });
 
 });
+
+
+
+//     Cart.findById(req.params.id).populate("comments").exec(function (err, foundCart) {
+//         if (err || !foundCart) {
+//             req.flash("error", "Cart not found");
+//             res.redirect("back");
+//         }
+//         else {
+//             User.findById(req.params.id, function(err, foundUser) {
+//                 if (err) {
+//                     req.flash("error", "Something went wrong");
+//                     res.redirect("/");
+//                 }
+//                 console.log(foundUser);
+//                 Cart.find().where("author.id").equals(foundUser._id).exec(function(err, carts) {
+//                     if (err) {
+//                         req.flash("error", "Something went wrong");
+//                         res.redirect("/");
+//                     }
+//                     res.render("carts/show", {cart: foundCart, user: foundUser, carts: carts});
+//                 });
+//             });
+//         }
+//     });
+// });
+//
+
+
+
+
 
 
 

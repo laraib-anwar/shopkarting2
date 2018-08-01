@@ -1,5 +1,6 @@
 var Cart = require("../models/cart");
 var Comment = require("../models/comment");
+var User = require("../models/user");
 
 //all the midlleware goes here
 var middlewareObj = {};
@@ -32,6 +33,7 @@ middlewareObj.checkCartOwnership = function(req, res, next){
 }
 
 middlewareObj.checkCommentOwnership = function(req, res, next){
+
     if(req.isAuthenticated()){
         Comment.findById(req.params.comment_id, function(err, foundComment){
             if(err || !foundComment){
@@ -57,18 +59,30 @@ middlewareObj.checkCommentOwnership = function(req, res, next){
 
         res.redirect("back");
     }
-}
+};
 
 
 
 
 middlewareObj.isLoggedIn = function(req, res, next){
+   // var active;
+    //User.find({id: req.user.id}, function(err, user) {
+    //active = user.active;
+    //});
+    //if(req.isAuthenticated() && active == true){
     if(req.isAuthenticated()){
         return next();
     }
     req.flash("error", "You need to be logged in to do that!!");
     res.redirect("/login");
-}
+};
 
 
 module.exports = middlewareObj;
+
+
+
+
+
+
+

@@ -6,7 +6,7 @@ var Cart = require("../models/cart");
 var async = require("async");
 var nodemailer = require("nodemailer");
 var crypto = require("crypto");
-
+const sgMail = require("@sendgrid/mail");
 //ROOT ROUTE
 router.get("/",function(req,res){
     res.render("home", {currentUser: req.user});
@@ -27,24 +27,44 @@ router.get("/register", function(req, res){
 
 //handling user sign up
 router.post("/register", function(req, res){
+    token = crypto.randomBytes(20).toString('hex');
     var newUser = new User(
         {
             username: req.body.username,
             firstName: req.body.firstName,
             lastName: req.body.lastName,
             email: req.body.email,
-            avatar: req.body.avatar
+            avatar: req.body.avatar,
+            verifyToken: token,
+            active: false
         });
     User.register(newUser, req.body.password, function(err, user){
         if(err){
             req.flash("error", err.message);
             return res.render("register");
         }
-        passport.authenticate("local")(req, res, function(){
-            req.flash("success", "Welcome to ShopCart " + user.username);
+        var smtpTransport = nodemailer.createTransport({
+            service: 'Gmail',
+            auth: {
+                user: 'laraib.anwar919@gmail.com',
+                pass: 'laraibforislam'
+            }
+        });
+        var mailOptions = {
+            to: user.email,
+            from: 'verify@shop-kart.in',
+            subject: 'ShopKart email verification',
+            text: 'Please click on the following link, or paste this into your browser to verify your email address:\n\n' +
+            'http://' + req.headers.host + '/verify/' + token + '\n\n' +
+            'If you did not request this, please ignore this email.\n'
+        };
+        smtpTransport.sendMail(mailOptions, function(err) {
+            console.log('mail sent');
+            req.flash('success', 'An e-mail has been sent to ' + user.email + ' with further instructions.');
             res.redirect("/carts");
         });
     });
+
 });
 
 
@@ -59,7 +79,7 @@ router.get("/help", function(req, res){
 
 
 //LOGIN ROUTES
-//rendr login form
+//render login form
 
 router.get("/login", function(req, res){
     res.render("login", {page: "login"});
@@ -126,6 +146,7 @@ router.get('/forgot', function(req, res) {
     res.render('forgot');
 });
 
+
 router.post('/forgot', function(req, res, next) {
     async.waterfall([
         function(done) {
@@ -154,7 +175,7 @@ router.post('/forgot', function(req, res, next) {
                 service: 'Gmail',
                 auth: {
                     user: 'laraib.anwar919@gmail.com',
-                    pass: "laraibforislam"
+                    pass: 'laraibforislam'
                 }
             });
             var mailOptions = {
@@ -218,7 +239,7 @@ router.post('/reset/:token', function(req, res) {
                 service: 'Gmail',
                 auth: {
                     user: 'laraib.anwar919@gmail.com',
-                    pass: "laraibforislam"
+                    pass: 'laraibforislam'
                 }
             });
             var mailOptions = {
@@ -238,11 +259,85 @@ router.post('/reset/:token', function(req, res) {
     });
 });
 
+// router.get('/verify/:token', function(req, res) {
+//     console.log("Token=", req.params.token)
+//             User.findOne({ verifyToken: req.params.token}, function(err, user) {
+//                 if (!user) {
+//                     req.flash('error', 'Token is invalid.');
+//                     return res.redirect('back');
+//                 }
+//                 console.log(user);
+//                 user.active = true;
+//                 user.save();
+//                 var smtpTransport = nodemailer.createTransport({
+//                     service: 'Gmail',
+//                     auth: {
+//                         user: 'laraib.anwar919@gmail.com',
+//                         pass: 'laraibforislam'
+//                     }
+//                 });
+//                 var mailOptions = {
+//                     to: user.email,
+//                     from: 'laraib.anwar919@gmail.com',
+//                     subject: 'Email address verified',
+//                     text: 'Hello,\n\n' +
+//                     'This is a confirmation that you email ' + user.email + ' has been verified.\n'
+//                 };
+//                 smtpTransport.sendMail(mailOptions, function(err) {
+//                     req.flash('success', 'Success! Email id confirmed. Login again');
+//                 });
+//                 req.flash('success', 'Email address verified.');
+//                 res.redirect("/carts");
+//             });
+// });
 
 
+router.get('/verify/:token', function(req, res) {
+    async.waterfall([
+        function(done) {
+            User.findOne({ verifyToken: req.params.token}, function(err, user) {
+                if (!user) {
+                    req.flash('error', 'Token is invalid.');
+                    return res.redirect('back');
+                }
+                        user.verifyToken = undefined;
+                        user.active = true;
+
+                        user.save(function(err) {
+                                done(err, user);
+                        });
 
 
+            });
+        },
+        function(user, done) {
+            var smtpTransport = nodemailer.createTransport({
+                service: 'Gmail',
+                auth: {
+                    user: 'laraib.anwar919@gmail.com',
+                    pass: 'laraibforislam'
+                }
+            });
+            var mailOptions = {
+                to: user.email,
+                from: 'laraib.anwar919@gmail.com',
+                subject: 'Email address verified',
+                text: 'Hello,\n\n' +
+                'This is a confirmation that your email ' + user.email + ' has just been verified.\n'
+            };
+            smtpTransport.sendMail(mailOptions, function(err) {
+                if(err) {
+                    done(err);
+                }
+                req.flash('success', 'Email address has been verified.');
+                res.redirect("/carts");
 
+            });
+        }
+    ], function(err) {
+        res.redirect('/carts');
+    });
+});
 
 
 

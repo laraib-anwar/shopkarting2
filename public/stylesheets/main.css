@@ -67,24 +67,6 @@
 }
 
 
-#head {
-    animation: type 4s steps(12);
-    overflow: hidden;
-    whitespace: nowrap;
-    font-family: consolas;
-    border-right: 4px solid white;
-    width: 12ch;
-
-}
-
-@keyframes type {
-    0% {
-        width: 0ch;
-    }
-    100% {
-        width: 12ch;
-    }
-}
 
 
 .profile{
@@ -113,4 +95,10 @@
 
 .fa:hover {
     color: darkblue;
+}
+
+
+#container {
+    width: 360px;
+    margin: 0 auto;
 }
