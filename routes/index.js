@@ -60,7 +60,7 @@ router.post("/register", function(req, res){
         };
         smtpTransport.sendMail(mailOptions, function(err) {
             console.log('mail sent');
-            req.flash('success', 'An e-mail has been sent to ' + user.email + ' with further instructions.');
+            req.flash('success', 'An e-mail has been sent to ' + user.email + ' with further instructions for verification of your gmail id.');
             res.redirect("/carts");
         });
     });
