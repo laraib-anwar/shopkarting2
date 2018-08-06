@@ -30,7 +30,7 @@ middlewareObj.checkCartOwnership = function(req, res, next){
         req.flash("error", "You need to be logged in to do that!!");
         res.redirect("back");
     }
-}
+};
 
 middlewareObj.checkCommentOwnership = function(req, res, next){
 
@@ -65,17 +65,28 @@ middlewareObj.checkCommentOwnership = function(req, res, next){
 
 
 middlewareObj.isLoggedIn = function(req, res, next){
-   // var active;
-    //User.find({id: req.user.id}, function(err, user) {
-    //active = user.active;
-    //});
-    //if(req.isAuthenticated() && active == true){
-    if(req.isAuthenticated()){
-        return next();
+    var active;
+    if(req.isAuthenticated()) {
+       function verify() {
+        User.findOne({email: req.user.email}, function (err, user) {
+            //console.log("1      ", user);
+            active = user.active;
+            if (active == true) {
+                return next();
+            }
+            req.flash("error", "You need to verify your email to see the content!!");
+            res.redirect("/carts");
+        });
     }
-    req.flash("error", "You need to be logged in to do that!!");
-    res.redirect("/login");
+        return verify();
+    }else{
+        req.flash("error", "You need to be logged in to do that!!");
+
+        res.redirect("/login");
+    }
 };
+
+
 
 
 module.exports = middlewareObj;
