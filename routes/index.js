@@ -46,8 +46,11 @@ router.post("/register", function(req, res){
         var smtpTransport = nodemailer.createTransport({
             service: 'Gmail',
             auth: {
-                user: 'laraib.anwar919@gmail.com',
-                pass: 'laraibforislam'
+                 user: 'laraib.anwar919@gmail.com',
+                 pass: 'laraibforislam'
+
+            //     user: 'shopkart',
+            //     pass: 'laraib@123'
             }
         });
         var mailOptions = {
@@ -174,8 +177,11 @@ router.post('/forgot', function(req, res, next) {
             var smtpTransport = nodemailer.createTransport({
                 service: 'Gmail',
                 auth: {
-                    user: 'laraib.anwar919@gmail.com',
-                    pass: 'laraibforislam'
+                     user: 'laraib.anwar919@gmail.com',
+                     pass: 'laraibforislam'
+
+                    //user: 'shopkart',
+                    //pass: 'laraib@123'
                 }
             });
             var mailOptions = {
@@ -238,8 +244,11 @@ router.post('/reset/:token', function(req, res) {
             var smtpTransport = nodemailer.createTransport({
                 service: 'Gmail',
                 auth: {
-                    user: 'laraib.anwar919@gmail.com',
-                    pass: 'laraibforislam'
+                     user: 'laraib.anwar919@gmail.com',
+                     pass: 'laraibforislam'
+                   // user: 'shopkart',
+                    //pass: 'laraib@123'
+
                 }
             });
             var mailOptions = {
@@ -314,8 +323,12 @@ router.get('/verify/:token', function(req, res) {
             var smtpTransport = nodemailer.createTransport({
                 service: 'Gmail',
                 auth: {
-                    user: 'laraib.anwar919@gmail.com',
-                    pass: 'laraibforislam'
+                     user: 'laraib.anwar919@gmail.com',
+                     pass: 'laraibforislam'
+
+
+                    //user: 'shopkart',
+                    //pass: 'laraib@123'
                 }
             });
             var mailOptions = {
