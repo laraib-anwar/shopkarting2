@@ -63,12 +63,25 @@ middlewareObj.checkCommentOwnership = function(req, res, next){
 
 
 middlewareObj.isLoggedIn = function(req, res, next){
-    if(req.isAuthenticated()){
-        return next();
-    }
-    res.redirect("/login");
-};
+    var active;
+    if(req.isAuthenticated()) {
+        function verify() {
+            User.findOne({email: req.user.email}, function (err, user) {
+                //console.log("1      ", user);
+                active = user.active;
+                if (active == true) {
+                    return next();
+                }
+                req.flash("error", "You need to verify your email to see the content!!");
+                res.redirect("/carts");
+            });
+        }
+        return verify();
+    }else{
+        req.flash("error", "You need to be logged in to do that!!");
 
+        res.redirect("/login");
+    }
 
 
 
