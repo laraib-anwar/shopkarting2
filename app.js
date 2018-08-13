@@ -23,8 +23,8 @@ var indexRoutes = require("./routes/index");
 
 
 
-//mongoose.connect("mongodb://laraib:laraib.anwara1@ds147461.mlab.com:47461/shopkart");
-mongoose.connect("mongodb://localhost/shopping_cart");
+mongoose.connect("mongodb://laraib:laraib.anwara1@ds147461.mlab.com:47461/shopkart");
+//mongoose.connect("mongodb://localhost/shopping_cart");
 app.use(express.static(__dirname + "/public"));
 app.set("view engine","ejs");
 app.use(bodyParser.urlencoded({extended:true}));
