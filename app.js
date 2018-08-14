@@ -13,6 +13,7 @@ var cookieParser = require("cookie-parser");
 var facebookStrategy = require('passport-facebook').Strategy;
 var googleStrategy = require('passport-google-oauth').OAuth2Strategy;
 var secret = require("./helpers/secret");
+var config = require("./config/config");
 
 
 
@@ -54,56 +55,7 @@ passport.deserializeUser(User.deserializeUser());
 
 
 
-passport.use(new facebookStrategy({
-        clientID: secret.facebook.clientID,
-        clientSecret: secret.facebook.clientSecret,
-        profileFields: ['email', 'displayName', 'photos'],
-        callbackURL: 'https://localhost:3000/auth/facebook/callback',
-        passRegToCallback: true
-
-    },
-    function(req, token, refreshToken, profile, done) {
-        User.findOne({email: profile._json.email}, function (err, user) {
-            if (err)
-                return done(err);
-            if (user) {
-                user.facebook = profile.id;
-                user.fullname = accessToken;
-                user.profilePic = 'https://graph.facebook.com/' + profile.id + '/picture?type=large';
-                user.fbTokens.push({token: token});
-
-                user.save(function (err) {
-                    if (err) {
-                        return done(err);
-                    }
-                    return done(null, newUser);
-
-                });
-            }
-
-            else
-            {
-                var newUser = new User();
-                newUser.facebook = profile.id;
-                newUser.username = profile.displayName;
-                newUser.email = profile._json.email;
-                newUser.profilePic = 'https://graph.facebook.com/' + profile.id + '/picture?type=large';
-                newUser.fbTokens.push({token: token});
-                newUser.save(function (err) {
-                    if (err) {
-                        return done(err);
-                    }
-                    return done(null, user);
-
-                });
-            }
-
-        })
-    }));
-
-
-
-
+//require('./config/passport')(passport);
 
 
 

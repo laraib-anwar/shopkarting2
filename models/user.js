@@ -1,5 +1,6 @@
 var mongoose = require("mongoose");
 var passportLocalMongoose = require("passport-local-mongoose");
+//var bcrypt = require("bcrypt-nodejs");
 
 var UserSchema = new mongoose.Schema({
     username: String,
@@ -14,7 +15,7 @@ var UserSchema = new mongoose.Schema({
     active: Boolean,
     facebook: {
         id: String,
-        token: String,
+        token: Array,
         email: String,
         name: String
     },
