@@ -23,6 +23,7 @@
     "express-session": "^1.15.6",
     "flash": "^1.1.0",
     "krypto": "0.0.1",
+    "mailgun-js": "^0.20.0",
     "method-override": "^2.3.10",
     "moment": "^2.22.0",
     "mongoose": "^5.2.4",

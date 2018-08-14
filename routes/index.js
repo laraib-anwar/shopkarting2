@@ -7,6 +7,17 @@ var async = require("async");
 var nodemailer = require("nodemailer");
 var crypto = require("crypto");
 const sgMail = require("@sendgrid/mail");
+sgMail.setApiKey('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');
+
+
+
+// FOR MAILGUN
+// var api_key = '';
+// var domain = '';
+// var mailgun = require('mailgun-js')({apikey: api_key, domain: domain});
+//
+
+
 //ROOT ROUTE
 router.get("/",function(req,res){
     res.render("home", {currentUser: req.user});
@@ -43,29 +54,95 @@ router.post("/register", function(req, res){
             req.flash("error", err.message);
             return res.render("register");
         }
-        var smtpTransport = nodemailer.createTransport({
-            service: 'Gmail',
-            auth: {
-                 user: 'laraib.anwar919@gmail.com',
-                 pass: 'laraibforislam'
 
-            //     user: 'shopkart',
-            //     pass: 'laraib@123'
-            }
-        });
-        var mailOptions = {
+//SENDING GMAIL VIA MAILGUN
+//         var data = {
+//             to: user.email,
+//             from: 'laraib.anwar919@gmail.com',
+//             subject: 'Node.js Password Reset',
+//             text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
+//             'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
+//             'http://' + req.headers.host + '/reset/' + token + '\n\n' +
+//             'If you did not request this, please ignore this email and your password will remain unchanged.\n'
+//         };
+//
+//
+//         mailgun.messages().send(data, function (error, body) {
+//             if(error) {
+//                 console.log(error);
+//             }
+//             console.log(body);
+//             console.log('mail sent');
+//             req.flash('success', 'An e-mail has been sent to ' + user.email + ' with further instructions.');
+//             res.redirect("/carts");
+//         });
+
+
+
+
+//SENDING EMAIL VIA SENDGRID
+        const msg = {
             to: user.email,
-            from: 'verify@shop-kart.in',
-            subject: 'ShopKart email verification',
-            text: 'Please click on the following link, or paste this into your browser to verify your email address:\n\n' +
-            'http://' + req.headers.host + '/verify/' + token + '\n\n' +
-            'If you did not request this, please ignore this email.\n'
+            from: 'laraib.anwar919@gmail.com',
+            subject: 'Node.js Password Reset',
+            text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
+            'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
+            'http://' + req.headers.host + '/reset/' + token + '\n\n' +
+            'If you did not request this, please ignore this email and your password will remain unchanged.\n'
         };
-        smtpTransport.sendMail(mailOptions, function(err) {
+
+
+        sgMail.send(msg, function (error, body) {
+            if(error) {
+                console.log(error);
+            }
+            console.log(body);
             console.log('mail sent');
-            req.flash('success', 'An e-mail has been sent to ' + user.email + ' with further instructions for verification of your gmail id.');
+            req.flash('success', 'An e-mail has been sent to ' + user.email + ' with further instructions.');
             res.redirect("/carts");
         });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //SENDING GMAIL FOR VERIFICATION USING GMAIL
+        // var smtpTransport = nodemailer.createTransport({
+        //     service: 'Gmail',
+        //     auth: {
+        //          user: 'laraib.anwar919@gmail.com',
+        //          pass: 'laraibforislam'
+        //
+        //     //     user: 'shopkart',
+        //     //     pass: 'laraib@123'
+        //     }
+        // });
+        // var mailOptions = {
+        //     to: user.email,
+        //     from: 'verify@shop-kart.in',
+        //     subject: 'ShopKart email verification',
+        //     text: 'Please click on the following link, or paste this into your browser to verify your email address:\n\n' +
+        //     'http://' + req.headers.host + '/verify/' + token + '\n\n' +
+        //     'If you did not request this, please ignore this email.\n'
+        // };
+        // smtpTransport.sendMail(mailOptions, function(err) {
+        //     console.log('mail sent');
+        //     req.flash('success', 'An e-mail has been sent to ' + user.email + ' with further instructions for verification of your gmail id.');
+        //     res.redirect("/carts");
+        // });
     });
 
 });
@@ -273,57 +350,91 @@ router.post('/reset/:token', function(req, res) {
     });
 });
 
-// router.get('/verify/:token', function(req, res) {
-//     console.log("Token=", req.params.token)
-//             User.findOne({ verifyToken: req.params.token}, function(err, user) {
-//                 if (!user) {
-//                     req.flash('error', 'Token is invalid.');
-//                     return res.redirect('back');
-//                 }
-//                 console.log(user);
-//                 user.active = true;
-//                 user.save();
-//                 var smtpTransport = nodemailer.createTransport({
-//                     service: 'Gmail',
-//                     auth: {
-//                         user: 'laraib.anwar919@gmail.com',
-//                         pass: 'laraibforislam'
-//                     }
-//                 });
-//                 var mailOptions = {
-//                     to: user.email,
-//                     from: 'laraib.anwar919@gmail.com',
-//                     subject: 'Email address verified',
-//                     text: 'Hello,\n\n' +
-//                     'This is a confirmation that you email ' + user.email + ' has been verified.\n'
-//                 };
-//                 smtpTransport.sendMail(mailOptions, function(err) {
-//                     req.flash('success', 'Success! Email id confirmed. Login again');
-//                 });
-//                 req.flash('success', 'Email address verified.');
-//                 res.redirect("/carts");
-//             });
-// });
 
 
+
+
+
+
+
+
+
+//Gmail verification
 router.get('/verify/:token', function(req, res) {
     async.waterfall([
-        function(done) {
-            User.findOne({ verifyToken: req.params.token}, function(err, user) {
+        function (done) {
+            User.findOne({verifyToken: req.params.token}, function (err, user) {
                 if (!user) {
                     req.flash('error', 'Token is invalid.');
                     return res.redirect('back');
                 }
-                        user.verifyToken = undefined;
-                        user.active = true;
+                user.verifyToken = undefined;
+                user.active = true;
 
-                        user.save(function(err) {
-                                done(err, user);
-                        });
+                user.save(function (err) {
+                    done(err, user);
+                });
 
 
             });
         },
+
+
+
+ //VERIFYING GMAIL USING MAILGUN
+//     var data = {
+//         to: user.email,
+//         from: 'laraib.anwar919@gmail.com',
+//         subject: 'Node.js Password Reset',
+//         text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
+//         'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
+//         'http://' + req.headers.host + '/reset/' + token + '\n\n' +
+//         'If you did not request this, please ignore this email and your password will remain unchanged.\n'
+//     };
+//
+//
+//     mailgun.messages().send(data, function (error, body) {
+//         if (error) {
+//             console.log(error);
+//         }
+//         req.flash('success', 'Email address has been verified.');
+//         res.redirect("/carts");
+//     });
+//
+//
+// ], function(err){
+//         res.redirect("/carts");
+//
+//     }
+// });
+// });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// VERIFYING GMAIL VERIFICATION USING GMAIL
+
         function(user, done) {
             var smtpTransport = nodemailer.createTransport({
                 service: 'Gmail',
@@ -356,13 +467,6 @@ router.get('/verify/:token', function(req, res) {
         res.redirect('/carts');
     });
 });
-
-
-
-
-
-
-
 
 
 
