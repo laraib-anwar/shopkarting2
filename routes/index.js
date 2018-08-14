@@ -82,25 +82,25 @@ router.post("/register", function(req, res){
 
 //SENDING EMAIL VIA SENDGRID
         const msg = {
-            to: user.email,
-            from: 'laraib.anwar919@gmail.com',
-            subject: 'Node.js Password Reset',
-            text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
-            'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
-            'http://' + req.headers.host + '/reset/' + token + '\n\n' +
-            'If you did not request this, please ignore this email and your password will remain unchanged.\n'
-        };
+                 to: user.email,
+                 from: 'verify@shop-kart.in',
+                 subject: 'ShopKart email verification',
+                 text: 'Please click on the following link, or paste this into your browser to verify your email address:\n\n' +
+                 'http://' + req.headers.host + '/verify/' + token + '\n\n' +
+                 'If you did not request this, please ignore this email.\n'
+             };
 
 
-        sgMail.send(msg, function (error, body) {
-            if(error) {
-                console.log(error);
-            }
-            console.log(body);
+
+
+
+
+        sgMail.send(msg, function (err) {
             console.log('mail sent');
-            req.flash('success', 'An e-mail has been sent to ' + user.email + ' with further instructions.');
+            req.flash('success', 'An e-mail has been sent to ' + user.email + ' with further instructions for verification of your gmail id.');
             res.redirect("/carts");
         });
+
 
 
 
