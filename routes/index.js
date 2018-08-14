@@ -411,40 +411,18 @@ router.get('/verify/:token', function(req, res) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// VERIFYING GMAIL VERIFICATION USING GMAIL
+// VERIFYING GMAIL USING SENDGRID
 
         function(user, done) {
             var smtpTransport = nodemailer.createTransport({
-                service: 'Gmail',
+                service: 'Sendgrid', //'Gmail',
                 auth: {
-                     user: 'laraib.anwar919@gmail.com',
-                     pass: 'laraibforislam'
+                    //user: 'laraib.anwar919@gmail.com',
+                    //pass: 'laraibforislam'
 
 
-                    //user: 'shopkart',
-                    //pass: 'laraib@123'
+                    user: 'shopkart',
+                    pass: 'laraib@123'
                 }
             });
             var mailOptions = {
@@ -471,6 +449,60 @@ router.get('/verify/:token', function(req, res) {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// VERIFYING GMAIL VERIFICATION USING GMAIL
+
+//         function(user, done) {
+//             var smtpTransport = nodemailer.createTransport({
+//                 service: 'Gmail',
+//                 auth: {
+//                      user: 'laraib.anwar919@gmail.com',
+//                      pass: 'laraibforislam'
+//
+//
+//                     //user: 'shopkart',
+//                     //pass: 'laraib@123'
+//                 }
+//             });
+//             var mailOptions = {
+//                 to: user.email,
+//                 from: 'laraib.anwar919@gmail.com',
+//                 subject: 'Email address verified',
+//                 text: 'Hello,\n\n' +
+//                 'This is a confirmation that your email ' + user.email + ' has just been verified.\n'
+//             };
+//             smtpTransport.sendMail(mailOptions, function(err) {
+//                 if(err) {
+//                     done(err);
+//                 }
+//                 req.flash('success', 'Email address has been verified.');
+//                 res.redirect("/carts");
+//
+//             });
+//         }
+//     ], function(err) {
+//         res.redirect('/carts');
+//     });
+// });
+//
+//
+//
+//
 
 
 
