@@ -257,13 +257,13 @@ router.post('/forgot', function(req, res, next) {
         },
         function(token, user, done) {
             var smtpTransport = nodemailer.createTransport({
-                service: 'Gmail',
+                service: 'Sendgrid', //'Gmail',
                 auth: {
-                     user: 'laraib.anwar919@gmail.com',
-                     pass: 'laraibforislam'
+                    // user: 'laraib.anwar919@gmail.com',
+                    // pass: 'laraibforislam'
 
-                    //user: 'shopkart',
-                    //pass: 'laraib@123'
+                    user: 'shopkart',
+                    pass: 'laraib@123'
                 }
             });
             var mailOptions = {
@@ -324,12 +324,12 @@ router.post('/reset/:token', function(req, res) {
         },
         function(user, done) {
             var smtpTransport = nodemailer.createTransport({
-                service: 'Gmail',
+                service: 'Sendgrid', //'Gmail',
                 auth: {
-                     user: 'laraib.anwar919@gmail.com',
-                     pass: 'laraibforislam'
-                   // user: 'shopkart',
-                    //pass: 'laraib@123'
+                     //user: 'laraib.anwar919@gmail.com',
+                     //pass: 'laraibforislam'
+                   user: 'shopkart',
+                    pass: 'laraib@123'
 
                 }
             });
@@ -381,36 +381,6 @@ router.get('/verify/:token', function(req, res) {
 
 
 
- //VERIFYING GMAIL USING MAILGUN
-//     var data = {
-//         to: user.email,
-//         from: 'laraib.anwar919@gmail.com',
-//         subject: 'Node.js Password Reset',
-//         text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
-//         'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
-//         'http://' + req.headers.host + '/reset/' + token + '\n\n' +
-//         'If you did not request this, please ignore this email and your password will remain unchanged.\n'
-//     };
-//
-//
-//     mailgun.messages().send(data, function (error, body) {
-//         if (error) {
-//             console.log(error);
-//         }
-//         req.flash('success', 'Email address has been verified.');
-//         res.redirect("/carts");
-//     });
-//
-//
-// ], function(err){
-//         res.redirect("/carts");
-//
-//     }
-// });
-// });
-
-
-
 // VERIFYING GMAIL USING SENDGRID
 
         function(user, done) {
@@ -455,6 +425,36 @@ router.get('/verify/:token', function(req, res) {
 
 
 
+
+
+
+//VERIFYING GMAIL USING MAILGUN
+//     var data = {
+//         to: user.email,
+//         from: 'laraib.anwar919@gmail.com',
+//         subject: 'Node.js Password Reset',
+//         text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
+//         'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
+//         'http://' + req.headers.host + '/reset/' + token + '\n\n' +
+//         'If you did not request this, please ignore this email and your password will remain unchanged.\n'
+//     };
+//
+//
+//     mailgun.messages().send(data, function (error, body) {
+//         if (error) {
+//             console.log(error);
+//         }
+//         req.flash('success', 'Email address has been verified.');
+//         res.redirect("/carts");
+//     });
+//
+//
+// ], function(err){
+//         res.redirect("/carts");
+//
+//     }
+// });
+// });
 
 
 
