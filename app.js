@@ -10,11 +10,32 @@ var Cart = require("./models/cart");
 var Comment = require("./models/comment");
 var User = require("./models/user");
 var cookieParser = require("cookie-parser");
-var facebookStrategy = require('passport-facebook').Strategy;
-var googleStrategy = require('passport-google-oauth').OAuth2Strategy;
-var secret = require("./helpers/secret");
-var config = require("./config/config");
+var FacebookStrategy = require('passport-facebook').Strategy;
+var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+var morgan = require('morgan');
 
+
+var configDB 		 = require('./config/database.js');
+
+var https 			 = require('https');
+
+//const fs 					 = require('fs');
+
+// configure https options for localhost
+// const options 		 = {
+//     key: fs.readFileSync( './server.key' ),
+//     cert: fs.readFileSync( './server.crt' ),
+//     requestCert: false,
+//     rejectUnauthorized: false
+// }
+
+// connect to the database
+mongoose.connect(configDB.url);
+
+
+mongoose.connect("mongodb://laraib:laraib.anwara1@ds147461.mlab.com:47461/shopkart");
+//mongoose.connect("mongodb://localhost/shopping_cart");
+//require('./config/passport')(passport);
 
 
 //REQUIRING ROUTES
@@ -24,8 +45,6 @@ var indexRoutes = require("./routes/index");
 
 
 
-mongoose.connect("mongodb://laraib:laraib.anwara1@ds147461.mlab.com:47461/shopkart");
-//mongoose.connect("mongodb://localhost/shopping_cart");
 app.use(express.static(__dirname + "/public"));
 app.set("view engine","ejs");
 app.use(bodyParser.urlencoded({extended:true}));
@@ -36,6 +55,9 @@ app.use(flash());
 app.locals.moment =  require("moment");
 
 
+//set up our express appication
+app.use(morgan('dev')) // log every request to the console
+app.use(cookieParser()) // read cookies (needed for auth)
 
 
 //PASSPORT CONFIGURATION
@@ -52,65 +74,6 @@ passport.deserializeUser(User.deserializeUser());
 
 
 
-
-
-
-//require('./config/passport')(passport);
-
-
-
-
-
-passport.use(new googleStrategy({
-        clientID: secret.google.clientID,
-        clientSecret: secret.google.clientSecret,
-        callbackURL: 'http://localhost:3000/auth/google/callback',
-        passRegToCallback: true
-
-    },
-    function(req, token, refreshToken, profile, done) {
-        User.findOne({email: profile.emails[0].value}, function (err, user) {
-            if (err)
-                return done(err);
-            if (user) {
-                user.google = profile.id;
-                user.fullname = accessToken;
-                user.profilePic = profile._json.image.url;
-
-
-                user.save(function (err) {
-                    if (err) {
-                        return done(err);
-                    }
-                    return done(null, newUser);
-
-                });
-            }
-
-            else
-            {
-                var newUser = new User();
-                newUser.google = profile.id;
-                newUser.username = profile.displayName;
-                newUser.email = profile.emails[0].value;
-                newUser.profilePic = profile._json.image.url;
-
-
-                newUser.save(function (err) {
-                    if (err) {
-                        return done(err);
-                    }
-                    return done(null, user);
-
-                });
-            }
-
-        })
-    }));
-
-
-
-
 app.use(function(req, res, next){
     res.locals.currentUser = req.user;
     res.locals.error = req.flash("error");
@@ -119,23 +82,11 @@ app.use(function(req, res, next){
 });
 
 
+
+
 app.use("/carts/:id/comments", commentRoutes);
 app.use("/carts", cartRoutes);
 app.use("/", indexRoutes);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 app.listen(process.env.PORT || 3000,function(){

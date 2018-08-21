@@ -3,6 +3,12 @@
 }
 
 
+.enable-notifications {
+    diplay: none;
+}
+
+
+
 .profile {
     list-style: none;
 }

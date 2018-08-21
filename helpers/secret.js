@@ -1,14 +1,9 @@
-module.exports = {
-    'facebook': {
-        'clientID': '243117269820289',
-        'clientSecret': 'f882d65ecbb57156eb553cdcf3e381f3',
-    },
-    google: {
-        clientID:'717428559072-rbfifps4p88ahhikne7dtpsmmdb0ib3k.apps.googleusercontent.com',
-        clientSecret:'3fAwTQALW1FpAtv6ma6JyhwK',
-    }
-};
+//cloudinary
 
+
+//cloud_name: 'dtjn1orb0',
+  //  api_key: "789532569495242",
+   // api_secret: "DUGsVTcR0VKVWBI0WJDdfxqKY08"
 
 
 //sendgrid api key
