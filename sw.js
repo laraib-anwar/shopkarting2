@@ -1,6 +1,6 @@
 //////////////////////////sw.js
-
-
+var mongoose = require("mongoose");
+mongoose.Promise = Promise;
 
 
 self.addEventListener('notificationclick', e => {
@@ -30,6 +30,9 @@ self.addEventListener('notificationclick', e => {
                         clients.openWindow(notification.data.url);
                     }
                     notification.close();
+                })
+                .catch(function(error) {
+                    console.log(error);
                 })
         )
         notification.close();

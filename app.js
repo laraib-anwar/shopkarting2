@@ -13,12 +13,19 @@ var cookieParser = require("cookie-parser");
 var FacebookStrategy = require('passport-facebook').Strategy;
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 var morgan = require('morgan');
+MongoClient = require('mongodb').MongoClient;
 
 
-var configDB 		 = require('./config/database.js');
+//var configDB 		 = require('./config/database.js');
 
 var https 			 = require('https');
 
+
+
+
+
+
+//===============fb code===============//
 //const fs 					 = require('fs');
 
 // configure https options for localhost
@@ -28,13 +35,24 @@ var https 			 = require('https');
 //     requestCert: false,
 //     rejectUnauthorized: false
 // }
+//===============fb code===============//
+
+
+
+
+mongoose.set('debug', true);
 
 // connect to the database
-mongoose.connect(configDB.url);
+//mongoose.connect(configDB.url);
+mongoose.Promise = Promise;
+
+//MongoClient.connect("mongodb://localhost:27017/shopping_cart", { useNewUrlParser: true });
 
 
-mongoose.connect("mongodb://laraib:laraib.anwara1@ds147461.mlab.com:47461/shopkart");
-//mongoose.connect("mongodb://localhost/shopping_cart");
+
+
+//mongoose.connect("mongodb://laraib:laraib.anwara1@ds147461.mlab.com:47461/shopkart");
+mongoose.connect("mongodb://localhost/shopping_cart");
 //require('./config/passport')(passport);
 
 

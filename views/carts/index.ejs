@@ -11,8 +11,8 @@
             <h1 id = "head">Welcome to Shopkarting.</h1>
             <p>View our carts posted from different students... </p>
 
-            <p><i class="fa fa-bell" aria-hidden="true"></i>Remember to <strong>Sign up</strong> in order to post ur cart<i class="fa fa-bell" aria-hidden="true"></i></p>
-            <button class = "enable-notifications btn btn-default">Enable notifications </button>
+            <p><i class="fa fa-bell" aria-hidden="true"></i>Remember to <strong><a href="/register">Sign up</a></strong> in order to post ur cart<i class="fa fa-bell" aria-hidden="true"></i></p>
+
 
             <p>
                 <a class = "btn btn-primary btn-large" href = "/carts/new">Add new cart</a>
@@ -45,7 +45,7 @@
         <h4><%= cart.name%></h4>
         </div>
         <p>
-        <a href = "/carts/<%= cart._id %>" class = "btn btn-primary">More info</a>
+        <a href = "/carts/<%= cart._id %>" class = "btn btn-primary">Cart Details</a>
             <strong>Rs.<%=cart.price%></strong>
         </p>
         </div>

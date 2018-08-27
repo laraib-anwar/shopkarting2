@@ -53,27 +53,6 @@ router.post("/register", function(req, res){
             return res.render("register");
         }
 
-//SENDING GMAIL VIA MAILGUN
-//         var data = {
-//             to: user.email,
-//             from: 'laraib.anwar919@gmail.com',
-//             subject: 'Node.js Password Reset',
-//             text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
-//             'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
-//             'http://' + req.headers.host + '/reset/' + token + '\n\n' +
-//             'If you did not request this, please ignore this email and your password will remain unchanged.\n'
-//         };
-//
-//
-//         mailgun.messages().send(data, function (error, body) {
-//             if(error) {
-//                 console.log(error);
-//             }
-//             console.log(body);
-//             console.log('mail sent');
-//             req.flash('success', 'An e-mail has been sent to ' + user.email + ' with further instructions.');
-//             res.redirect("/carts");
-//         });
 
 
 
@@ -81,8 +60,8 @@ router.post("/register", function(req, res){
 //SENDING EMAIL VIA SENDGRID
         const msg = {
                  to: user.email,
-                 from: 'verify@shop-kart.in',
-                 subject: 'ShopKart email verification',
+                 from: 'verify@shopkarting.in',
+                 subject: 'Shopkarting email verification',
                  text: 'Please click on the following link, or paste this into your browser to verify your email address:\n\n' +
                  'http://' + req.headers.host + '/verify/' + token + '\n\n' +
                  'If you did not request this, please ignore this email.\n'
@@ -99,30 +78,6 @@ router.post("/register", function(req, res){
 
 
 
-        //SENDING GMAIL FOR VERIFICATION USING GMAIL
-        // var smtpTransport = nodemailer.createTransport({
-        //     service: 'Gmail',
-        //     auth: {
-        //          user: 'laraib.anwar919@gmail.com',
-        //          pass: 'laraibforislam'
-        //
-        //     //     user: 'shopkart',
-        //     //     pass: 'laraib@123'
-        //     }
-        // });
-        // var mailOptions = {
-        //     to: user.email,
-        //     from: 'verify@shop-kart.in',
-        //     subject: 'ShopKart email verification',
-        //     text: 'Please click on the following link, or paste this into your browser to verify your email address:\n\n' +
-        //     'http://' + req.headers.host + '/verify/' + token + '\n\n' +
-        //     'If you did not request this, please ignore this email.\n'
-        // };
-        // smtpTransport.sendMail(mailOptions, function(err) {
-        //     console.log('mail sent');
-        //     req.flash('success', 'An e-mail has been sent to ' + user.email + ' with further instructions for verification of your gmail id.');
-        //     res.redirect("/carts");
-        // });
     });
 
 });
@@ -297,8 +252,8 @@ router.post('/forgot', function(req, res, next) {
             });
             var mailOptions = {
                 to: user.email,
-                from: 'laraib.anwar919@gmail.com',
-                subject: 'Node.js Password Reset',
+                from: 'verify@shopkarting.in',
+                subject: 'Password Reset for shopkarting',
                 text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
                 'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
                 'http://' + req.headers.host + '/reset/' + token + '\n\n' +
@@ -364,7 +319,7 @@ router.post('/reset/:token', function(req, res) {
             });
             var mailOptions = {
                 to: user.email,
-                from: 'laraib.anwar919@gmail.com',
+                from: 'verify@shopkarting.in',
                 subject: 'Your password has been changed',
                 text: 'Hello,\n\n' +
                 'This is a confirmation that the password for your account ' + user.email + ' has just been changed.\n'
@@ -418,7 +373,7 @@ router.get('/verify/:token', function(req, res) {
             });
             var mailOptions = {
                 to: user.email,
-                from: 'laraib.anwar919@gmail.com',
+                from: 'verify@shopkarting.in',
                 subject: 'Email address verified',
                 text: 'Hello,\n\n' +
                 'This is a confirmation that your email ' + user.email + ' has just been verified.\n'

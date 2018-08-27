@@ -23,6 +23,7 @@
 
                         <h4><a><%= cart.name %></a></h4>
                         <p><%= cart.description %></p>
+                        <em>Click on the uploader's name to see all the posts.</em>
                         <p>
                             <em>Submitted By: <a href = "/users/<%= cart.author.id %>"><%= cart.author.username %></a>, <%= moment(cart.createdAt).fromNow() %></em>
                         </p>
@@ -49,7 +50,7 @@
                 <% if(currentUser && cart.author.id.equals(currentUser._id)){%>
                 <form action="/carts/<%= cart._id %>/comments" method="POST">
                 <div class="form-group">
-                <label for="text">Post your college details for the buyer to know you:</label>
+                <label for="text">Post your class details or  phone number for the buyer to contact you:</label>
                 <input class="form-control" id="text" type="text" name="text" placeholder="text">
                 </div>
                 <div class = "form-group">
@@ -70,7 +71,7 @@
 
                 <% } else {%>
                 <div class="form-group">
-                <label for="text">Get logged in inorder to comment</label>
+                <label for="text">Get <a href="/login">logged in </a>inorder to comment</label>
                 </div>
                 <% } %>
 
@@ -85,7 +86,7 @@
                 <div class ="col-md-12">
 
                 <strong><%= comment.author.username %></strong>
-                <span class = "pull-right"><%= moment(comment.createdAt).format('lll')%></span>
+                <span class = "pull-right"><%= moment(comment.createdAt).fromNow() %></span>
                 <p>
                 <%= comment.text %>
                 </p>

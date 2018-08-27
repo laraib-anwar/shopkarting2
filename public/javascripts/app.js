@@ -1,5 +1,10 @@
 //in javascripts/app.js
 
+
+var mongoose = require("mongoose");
+mongoose.Promise = Promise;
+
+
 let deferredPrompt;
 var enableNotificationsButtons = document.querySelectorAll('.enable-notifications');
 
@@ -70,7 +75,9 @@ configurePushSub = () => {
             else {
                 // We have a subscription
             }
-        })
+        }).catch(function(error) {
+        console.log(error);
+    })
         .then(newSub => {
             return fetch('\mongodb://localhost/shopping_cart\.json', {
                 method: 'POST',
@@ -80,7 +87,9 @@ configurePushSub = () => {
                 },
                 body: JSON.stringify(newSub)
             });
-        })
+        }).catch(function(error) {
+        console.log(error);
+    })
         .then(res => {
             if(res.ok) {
                 displayConfirmNotification();
