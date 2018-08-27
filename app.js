@@ -51,7 +51,7 @@ mongoose.Promise = Promise;
 
 
 
-mongoose.connect("mongodb://laraib:laraib.anwara1@ds147461.mlab.com:47461/shopkart");
+MongoClient.connect("mongodb://laraib:laraib.anwara1@ds147461.mlab.com:47461/shopkart",  { useNewUrlParser: true } );
 //mongoose.connect("mongodb://localhost/shopping_cart");
 //require('./config/passport')(passport);
 
