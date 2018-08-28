@@ -56,7 +56,7 @@ router.post("/",  function(req, res){      // after "/", put this one-middleware
                     cart.comments.push(comment);
                     cart.save();
                     console.log(comment);
-                    req.flash("success", "Succeccfully added comment!!");
+                    req.flash("success", "Successfully added comment!!");
                     res.redirect('/carts/' + cart._id);
                 }
             });
