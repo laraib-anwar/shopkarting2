@@ -164,6 +164,9 @@ router.get("/:id/edit", middleware.checkCartOwnership, function(req, res) {
 
 
         Cart.findById(req.params.id, function (err, foundCart) {
+            if(err){
+                res.redirect("/carts");
+            }
 
             res.render("carts/edit", {cart: foundCart});
         });
