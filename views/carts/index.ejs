@@ -5,9 +5,11 @@
 
 
 <div class = "container">
+<header class = "jumbotron">
+    <div class = "container">
 
-    <header class = "jumbotron">
-        <div class = "container">
+
+
             <h2 id = "head">Welcome to Shopkarting.</h2>
             <p>View our carts posted from different students... </p>
 
@@ -15,22 +17,24 @@
 
 
             <p>
-                <a class = "btn btn-primary btn-large" href = "/carts/new">Add new cart</a>
+                <a class = "btn btn-default btn-large" href = "/carts/new">Add new cart</a>
             </p>
             <p>
                 <form action = "/carts" method = "GET" class = "form-inline">
                     <div class = "form-group">
                         <input type = "text" name = "search" placeholder = "Cart search..." class = "form-control">
-                            <input type = "submit" value = "Search" class = "btn btn-primary">
+                            <input type = "submit" value = "Search" class = "btn btn-default">
 
                         </div>
                     </form>
             </p>
         </div>
+        </header>
 
 
 
-    </header>
+
+
 
 
 
@@ -45,7 +49,7 @@
         <h4><%= cart.name%></h4>
         </div>
         <p>
-        <a href = "/carts/<%= cart._id %>" class = "btn btn-primary">More Info</a>
+        <a href = "/carts/<%= cart._id %>" class = "btn btn-success">More Deatils</a>
             <strong>Rs.<%=cart.price%></strong>
         </p>
         </div>
@@ -53,7 +57,7 @@
         <% }); %>
     </div>
 
-
+</div>
 
 
 
