@@ -6,24 +6,19 @@ var UserSchema = new mongoose.Schema({
     username: String,
     password: String,
     avatar: String,
-    firstName: String,
-    lastName: String,
-    email: {type: String, required:true, unique: true},
+    name: String,
+    email: {type: String, unique: true},
     resetPasswordToken: String,
     resetPasswordExpires: Date,
     verifyToken: String,
     active: Boolean,
     facebook: {
         id: String,
-        token: String,
-        email: String,
-        name: String
+        token: Array,
     },
     google: {
         id: String,
         token: String,
-        email: String,
-        name: String
     }
 });
 

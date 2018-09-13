@@ -40,8 +40,7 @@ router.post("/register", function(req, res){
     var newUser = new User(
         {
             username: req.body.username,
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
+            name: req.body.name,
             email: req.body.email,
             avatar: req.body.avatar,
             verifyToken: token,
@@ -124,44 +123,14 @@ router.get('/profile', isLoggedIn, function(req, res){
 });
 
 // route for facebook authentication and login
-router.get('/auth/facebook', passport.authenticate('facebook', { scope: ['email'] }));
+router.get('/auth/facebook', passport.authenticate('facebook', { scope: ['public_profile', 'email'] }));
 
 
 // handle the callback after facebook has authenticated the user
 router.get('/auth/facebook/callback', passport.authenticate('facebook', {
-    successRedirect: '/profile',
+    successRedirect: '/carts',
     failureRedirect: '/'
 }));
-
-
-
-
-
-
-
-//auth facebook github method
-
-
-// route for home page
-// router.get('/', userController.index)
-//
-// // route for showing the profile page
-// router.get('/profile', isLoggedIn, userController.profileGet)
-//
-// // route for facebook authentication and login
-// router.get('/auth/facebook', userController.authFacebookGet)
-//
-// // handle the callback after facebook has authenticated the user
-// router.get('/auth/facebook/callback', userController.authFacebookCallbackGet)
-//
-// // route for logging out
-// router.get('/logout', userController.logoutGet)
-//
-//
-//
-
-
-
 
 
 
@@ -174,9 +143,9 @@ router.get('/auth/facebook/callback', passport.authenticate('facebook', {
 
 //Auth for google you tube methid
 
-router.get('/auth/google', passport.authenticate('google', {scope: ['profile', 'email']}));
+router.get('/auth/google', passport.authenticate('google', {scope: ['https://www.googleapis.com/auth/plus.login', 'https://www.googleapis.com/auth/plus.profile.emails.read']}));
 router.get('/auth/google/callback', passport.authenticate('google', {
-    successRedirect: "/profile",
+    successRedirect: "/carts",
     failureRedirect: "/"
 
 }));

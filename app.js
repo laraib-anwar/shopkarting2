@@ -16,7 +16,7 @@ var morgan = require('morgan');
 MongoClient = require('mongodb').MongoClient;
 
 
-//var configDB 		 = require('./config/database.js');
+var configDB 		 = require('./config/database.js');
 
 var https 			 = require('https');
 
@@ -25,17 +25,6 @@ var https 			 = require('https');
 
 
 
-//===============fb code===============//
-//const fs 					 = require('fs');
-
-// configure https options for localhost
-// const options 		 = {
-//     key: fs.readFileSync( './server.key' ),
-//     cert: fs.readFileSync( './server.crt' ),
-//     requestCert: false,
-//     rejectUnauthorized: false
-// }
-//===============fb code===============//
 
 
 
@@ -43,7 +32,7 @@ var https 			 = require('https');
 mongoose.set('debug', true);
 
 // connect to the database
-//mongoose.connect(configDB.url);
+mongoose.connect(configDB.url);
 mongoose.Promise = Promise;
 
 //MongoClient.connect("mongodb://localhost:27017/shopping_cart", { useNewUrlParser: true });
@@ -51,9 +40,9 @@ mongoose.Promise = Promise;
 
 
 
-mongoose.connect("mongodb://laraib:laraib.anwara1@ds147461.mlab.com:47461/shopkart" );
+//mongoose.connect("mongodb://laraib:laraib.anwara1@ds147461.mlab.com:47461/shopkart" );
 //mongoose.connect("mongodb://localhost/shopping_cart");
-//require('./config/passport')(passport);
+require('./config/passport')(passport);
 
 
 //REQUIRING ROUTES
