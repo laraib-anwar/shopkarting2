@@ -1,5 +1,24 @@
 <% include ./partials/header %>
 
+
+
+<style>
+        .jumbotron {
+            color: black;
+            background-color: #e6e8eefd;
+            
+        }
+
+
+         hr {
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+
+}
+
+</style>
+
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> <!-- load fontawesome -->
 
 <link rel = "stylesheet" type = "text/css" href = "/stylesheets/login.css">
@@ -17,6 +36,15 @@
 
             <div style = "width:30%; margin: 5px auto;">
                 <form action = "/register" method = "POST">
+
+                    <div class = "form-group">
+                                    <a href="/auth/google" class="btn btn-danger"><span class="fa fa-google-plus"></span> Google+</a>
+                                </div>
+
+
+
+
+
                     <div class = "form-group">
                         <input class = "form-control" type = "text" name = "username" placeholder = "username">
                     </div>
@@ -24,11 +52,11 @@
                         <input class = "form-control" type = "password" name = "password" placeholder = "password">
                     </div>
                     <div class = "form-group">
-                        <input  class = "form-control" type = "text" name = "firstName" placeholder = "First name">
+                        <input  class = "form-control" type = "text" name = "name" placeholder = "First name">
                     </div>
 
                     <div class = "form-group">
-                        <input  class = "form-control" type = "text" name = "lastName" placeholder = "Last name">
+                        <input  class = "form-control" type = "text" name = "name" placeholder = "Last name">
                     </div>
 
 
@@ -36,9 +64,23 @@
                         <input class = "form-control" type = "email" name = "email" placeholder = "email">
                      </div>
                     <div class = "form-group">
-                        <button class = "btn btn-lg btn-primary"> Submit! </button>
+                        <button class = "btn btn-primary"> Sign Up </button>
                     </div>
                 </form>
+
+                <hr>or<hr>
+
+                                
+                                
+
+                <div class = "form-group">
+                        <a href = "/login"> <button class = "btn  btn-success">Have One </button> </a>
+                     </div>
+
+
+
+
+
                 <a href = "/carts" style="color:blue">Go Back</a>
 
             </div>

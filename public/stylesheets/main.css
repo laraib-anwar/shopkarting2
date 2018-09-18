@@ -4,14 +4,39 @@
 
 
 
-footer {
-    margin-top: 2rem;
+
+
+.footer {
+   
     background: var(--dark);
-    color: var(--light);
+    width: 100%;
     text-align: center;
     padding: 1rem;
+   
+    color: white;
 }
 
+
+
+
+.jumbotron {
+    background-color: black;
+    color: white;
+}
+
+
+.navbar-default {
+    background-color: black;
+    color: white;
+
+}
+
+
+
+.navbar-nav li {
+    color: white;
+
+}
 
 
 
