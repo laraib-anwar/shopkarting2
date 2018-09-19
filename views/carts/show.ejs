@@ -3,6 +3,7 @@
 <style>
     .jumbotron {
         color: black;
+        background-color: #e6e8eefd;
         
         
     }
@@ -51,7 +52,7 @@
                         <% if(currentUser && cart.author.id.equals(currentUser._id)){%>
                         <a class = "btn  btn-danger" href = "/carts/<%= cart._id %>/edit">Edit</a>
                         <form id = "delete-form" action = "/carts/<%= cart._id %>?_method=DELETE" method = "POST">
-                        <button type="button" class="btn btn-outline-danger">Delete</button>
+                        <button type="button" class="btn btn-warning">Delete</button>
                         </form>
                         <% }%>
                     </div>
@@ -101,7 +102,7 @@
 
                 <% if(currentUser && comment.author.id.equals(currentUser._id)){%>
                 <form id = "delete-form" action = "/carts/<%= cart._id %>/comments/<%= comment._id %>?_method=DELETE" method = "POST">
-                <input type = "submit" class = "btn btn-outline-danger" value = "Delete">
+                <input type = "submit" class = "btn btn-warning" value = "Delete">
 
                 </form>
                 <% }%>

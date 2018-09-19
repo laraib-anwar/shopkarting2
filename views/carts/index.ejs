@@ -10,7 +10,7 @@
 
 
 
-            <h2 id = "head">Welcome to Shopkarting.</h2>
+            <h2 id = "head">Shopkarting.</h2>
             <p>View our products posted from different students... </p>
 
             <p><i class="fa fa-bell" aria-hidden="true"></i>Remember to <strong><a href="/register">Sign up</a></strong> in order to post ur product<i class="fa fa-bell" aria-hidden="true"></i></p>
@@ -44,7 +44,11 @@
         <% carts.forEach(function(cart){ %>
         <div class = "col-md-3 col-sm-6">
         <div class = "thumbnail">
+                <div class = "item blue">
         <img src = "<%= cart.image %>">
+
+        <i class = "fa fa-camera"></i>
+
         <div class = "caption">
         <h4><%= cart.name%></h4>
         </div>
@@ -52,6 +56,7 @@
         <a href = "/carts/<%= cart._id %>" class = "btn btn-success">More Details</a>
             <strong>Rs.<%=cart.price%></strong>
         </p>
+        </div>
         </div>
         </div>
         <% }); %>
