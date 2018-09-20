@@ -11,10 +11,15 @@
 
 
             <h2 id = "head">Shopkarting.</h2>
+            <% if(currentUser){%>
+            <p>View our products posted from different students... </p>
+            <% } %> 
+
+            <% else { %>
             <p>View our products posted from different students... </p>
 
             <p><i class="fa fa-bell" aria-hidden="true"></i>Remember to <strong><a href="/register">Sign up</a></strong> in order to post ur product<i class="fa fa-bell" aria-hidden="true"></i></p>
-
+            <% } %>
 
             <p>
                 <a class = "btn btn-default btn-large" href = "/carts/new">Add new product</a>
