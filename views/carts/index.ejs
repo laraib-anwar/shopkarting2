@@ -56,6 +56,15 @@
 
         <div class = "caption">
         <h4><%= cart.name%></h4>
+        <% if (cart.rating === 0) { %>
+            <em>No reviews yet.</em>
+            <% } else { %>
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star <% if (cart.rating > 1.5) { %> checked <% } %>"></span>
+            <span class="fa fa-star <% if (cart.rating > 2.5) { %> checked <% } %>"></span>
+            <span class="fa fa-star <% if (cart.rating > 3.5) { %> checked <% } %>"></span>
+            <span class="fa fa-star <% if (cart.rating > 4.5) { %> checked <% } %>"></span>
+            <% } %>
         </div>
         <p>
         <a href = "/carts/<%= cart._id %>" class = "btn btn-success">More Details</a>

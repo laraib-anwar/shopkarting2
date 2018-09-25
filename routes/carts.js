@@ -5,6 +5,7 @@ var Cart = require("../models/cart");
 var middleware = require("../middleware");
 var request = require("request");
 var multer = require('multer');
+var Review = require("../models/review");
 var storage = multer.diskStorage({
     filename: function(req, file, callback) {
         callback(null, Date.now() + file.originalname);
@@ -99,11 +100,49 @@ router.get("/new", middleware.isLoggedIn, function (req,res){
 });
 
 
+
+// SHOW - shows more info about one cart
+// router.get("/:id", function (req, res) {
+//     //find the cart with provided ID
+//     Cart.findById(req.params.id).populate("comments").populate({
+//         path: "reviews",
+//         options: {sort: {createdAt: -1}}
+//     }).exec(function (err, foundCart) {
+//         if (err) {
+//             console.log(err);
+//         } else {
+//             //render show template with that cart
+//             res.render("carts/show", {cart: foundCart});
+//         }
+//     });
+// });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //SHOW CART  -shows more info about one CART
 
 router.get("/:id", function(req,res) {
     //find the cart with unique id
-    Cart.findById(req.params.id).populate("comments").exec(function(err, foundCart){
+    Cart.findById(req.params.id).populate("comments")
+    .populate({
+        path: "reviews",
+        options: {sort: {createdAt: -1}}
+    })
+    .exec(function(err, foundCart){
         if(err || !foundCart)
         {
             req.flash("error", "Cart not found");
@@ -116,34 +155,10 @@ router.get("/:id", function(req,res) {
         }
     });
 
-});
+ });
 
 
 
-//     Cart.findById(req.params.id).populate("comments").exec(function (err, foundCart) {
-//         if (err || !foundCart) {
-//             req.flash("error", "Cart not found");
-//             res.redirect("back");
-//         }
-//         else {
-//             User.findById(req.params.id, function(err, foundUser) {
-//                 if (err) {
-//                     req.flash("error", "Something went wrong");
-//                     res.redirect("/");
-//                 }
-//                 console.log(foundUser);
-//                 Cart.find().where("author.id").equals(foundUser._id).exec(function(err, carts) {
-//                     if (err) {
-//                         req.flash("error", "Something went wrong");
-//                         res.redirect("/");
-//                     }
-//                     res.render("carts/show", {cart: foundCart, user: foundUser, carts: carts});
-//                 });
-//             });
-//         }
-//     });
-// });
-//
 
 
 
@@ -176,6 +191,7 @@ router.get("/:id/edit", middleware.checkCartOwnership, function(req, res) {
 
 //UPDATE CART
 router.put("/:id", middleware.checkCartOwnership, function(req, res){
+    delete req.body.cart.rating;
     //find and update the cart
     Cart.findByIdAndUpdate(req.params.id, req.body.cart, function(err, updatedCart){
         if(err){
@@ -189,7 +205,33 @@ router.put("/:id", middleware.checkCartOwnership, function(req, res){
 
 
 
-
+// DESTROY CART ROUTE
+router.delete("/:id", middleware.checkCartOwnership, function (req, res) {
+    Cart.findById(req.params.id, function (err, cart) {
+        if (err) {
+            res.redirect("/carts");
+        } else {
+            // deletes all comments associated with the cart
+            Comment.remove({"_id": {$in: cart.comments}}, function (err) {
+                if (err) {
+                    console.log(err);
+                    return res.redirect("/carts");
+                }
+                // deletes all reviews associated with the cart
+                Review.remove({"_id": {$in: cart.reviews}}, function (err) {
+                    if (err) {
+                        console.log(err);
+                        return res.redirect("/carts");
+                    }
+                    //  delete the cart
+                    cart.remove();
+                    req.flash("success", "cart deleted successfully!");
+                    res.redirect("/carts");
+                });
+            });
+        }
+    });
+});
 
 
 
@@ -199,17 +241,17 @@ router.put("/:id", middleware.checkCartOwnership, function(req, res){
 
 
 //DESTROY CART ROUTE
-router.delete("/:id",  middleware.checkCartOwnership, function(req, res){
-    //destroy cart
-    Cart.findByIdAndRemove(req.params.id, function(err){
-        if(err){
-            res.redirect("/carts");
-        }
-        else{
-            res.redirect("/carts");
-        }
-    });
-});
+// router.delete("/:id",  middleware.checkCartOwnership, function(req, res){
+//     //destroy cart
+//     Cart.findByIdAndRemove(req.params.id, function(err){
+//         if(err){
+//             res.redirect("/carts");
+//         }
+//         else{
+//             res.redirect("/carts");
+//         }
+//     });
+// });
 
 
 function escapeRegex(text){

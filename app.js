@@ -8,6 +8,8 @@ var LocalStrategy = require("passport-local");
 var methodOverride = require("method-override");
 var Cart = require("./models/cart");
 var Comment = require("./models/comment");
+var Review = require("./models/review");
+
 var User = require("./models/user");
 var cookieParser = require("cookie-parser");
 var FacebookStrategy = require('passport-facebook').Strategy;
@@ -49,7 +51,7 @@ require('./config/passport')(passport);
 var commentRoutes = require("./routes/comments");
 var cartRoutes = require("./routes/carts");
 var indexRoutes = require("./routes/index");
-
+var reviewRoutes     = require("./routes/reviews");
 
 
 app.use(express.static(__dirname + "/public"));
@@ -94,6 +96,7 @@ app.use(function(req, res, next){
 app.use("/carts/:id/comments", commentRoutes);
 app.use("/carts", cartRoutes);
 app.use("/", indexRoutes);
+app.use("/carts/:id/reviews", reviewRoutes);
 
 
 app.listen(process.env.PORT || 3000,function(){
