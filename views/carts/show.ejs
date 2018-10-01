@@ -47,9 +47,9 @@
                         <hr>
                         
                         <p>
-                            Submitted By: <a href = "/users/<%= cart.author.id %>"><%= cart.author.username %></a>, <%= moment(cart.createdAt).format('MMM Do YYYY') %></em>
+                            Submitted By: <a href = "/users/<%= cart.author.id %>"><strong><%= cart.author.username %></strong></a>, <%= moment(cart.createdAt).format('MMM Do YYYY') %></em>
                         </p>
-                        <p><a href = "/users/notify/<%= cart.author.id %>">See the notifications.</a></p>
+                        <p><a href = "/users/notify/<%= cart.author.id %>"><strong>See the notifications.</strong></a></p>
                         
                         
                         <% if(currentUser && cart.author.id.equals(currentUser._id)){%>

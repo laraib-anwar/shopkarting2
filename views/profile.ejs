@@ -1,7 +1,22 @@
 <% include ./partials/header %> 
+<style>
+p {
+    text-emphasis-color: blue;
+    font-size: 100%;
+    font-style: bold;
+}
+
+</style>
 
 <h1><%= user.username %>'s profile</h1>
 
 <a href="/follow/<%= user.id %>"><button class="btn btn-primary">Bookmark <%= user.username %> to get notifications..</button></a>
 
-<% include ./partials/footer %> 
+<p>Click on the butoon to get notified of the posts from the uploader..</p>
+
+<div class = "footer">
+        <footer>
+            <p>ShopKarting &copy; 2018</p>
+        </footer>
+        </div>
+        
