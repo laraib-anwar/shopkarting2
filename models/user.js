@@ -20,7 +20,19 @@ var UserSchema = new mongoose.Schema({
     google: {
         id: String,
         token: String,
-    }
+    },
+    notifications: [
+    	{
+    	   type: mongoose.Schema.Types.ObjectId,
+    	   ref: 'Notification'
+    	}
+    ],
+    followers: [
+    	{
+    		type: mongoose.Schema.Types.ObjectId,
+    		ref: 'User'
+    	}
+    ]
 });
 
 UserSchema.plugin(passportLocalMongoose);

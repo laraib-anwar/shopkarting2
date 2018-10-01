@@ -5,6 +5,7 @@ var Cart = require("../models/cart");
 var middleware = require("../middleware");
 var request = require("request");
 var multer = require('multer');
+var Notification = require("../models/notification");
 var Review = require("../models/review");
 var storage = multer.diskStorage({
     filename: function(req, file, callback) {
@@ -64,8 +65,8 @@ router.get("/",function(req, res){
 
 
 //CREATE - ADD NEW CART TO DB
-router.post("/", middleware.isLoggedIn, upload.single('image'), function(req, res) {
-    cloudinary.uploader.upload(req.file.path, function(result) {
+router.post("/", middleware.isLoggedIn, upload.single('image'), async function(req, res) {
+    cloudinary.uploader.upload(req.file.path, async function(result) {
         // add cloudinary url for the image to the cart object under image property
         req.body.cart.image = result.secure_url;
         // add author to cart
@@ -73,24 +74,80 @@ router.post("/", middleware.isLoggedIn, upload.single('image'), function(req, re
             id: req.user._id,
             username: req.user.username
         };
-        Cart.create(req.body.cart, function(err, cart) {
-            if (err) {
-                req.flash('error', err.message);
-                return res.redirect('back');
+
+        // Cart.create(req.body.cart, function(err, cart) {
+        //     if (err) {
+        //         req.flash('error', err.message);
+        //         return res.redirect('back');
+        //     }
+        //     //try {
+        //         //let cart = await Cart.create(req.body.cart);
+        //         //let user = await User.findById(req.user._id).populate('followers').exec();
+        //         User.findById(req.user._id).populate('followers').exec(function (err, foundUser) {
+        //             if(err){
+        //                 console.log(err);
+        //             }
+        //             else{
+
+        //             }
+        //         });
+            
+        //         let newNotification = {
+        //           username: req.user.username,
+        //           cartId: cart.id
+        //         }
+        //         for(const follower of user.followers) {
+        //           let notification = await Notification.create(newNotification);
+        //           follower.notifications.push(notification);
+        //           follower.save();
+        //         } 
+          
+        //         //redirect back to carts page
+        //         res.redirect(`/carts/${cart.id}`);
+        //       //}
+        //     //    catch(err) {
+        //     //     req.flash('error', err.message);
+        //     //     res.redirect('back');
+        //     //   }
+        //     //res.redirect('/carts/' + cart.id);
+        // });
+
+        
+        
+       
+        try {
+            let cart = await Cart.create(req.body.cart);
+            let user = await User.findById(req.user._id).populate('followers').exec();
+            let newNotification = {
+              username: req.user.username,
+              cartId: cart.id
             }
-            res.redirect('/carts/' + cart.id);
-        });
+            for(const follower of user.followers) {
+              let notification = await Notification.create(newNotification);
+              follower.notifications.push(notification);
+              follower.save();
+            }
+      
+            //redirect back to carts page
+            res.redirect(`/carts/${cart.id}`);
+          } catch(err) {
+            req.flash('error', err.message);
+            res.redirect('back');
+          }
+
     });
 });
 
 
 
 
-
-
-
-
-
+ // Cart.create(req.body.cart, function(err, cart) {
+        //     if (err) {
+        //         req.flash('error', err.message);
+        //         return res.redirect('back');
+        //     }
+        //     res.redirect('/carts/' + cart.id);
+        // });
 
 
 
@@ -98,39 +155,6 @@ router.post("/", middleware.isLoggedIn, upload.single('image'), function(req, re
 router.get("/new", middleware.isLoggedIn, function (req,res){
     res.render("carts/new");
 });
-
-
-
-// SHOW - shows more info about one cart
-// router.get("/:id", function (req, res) {
-//     //find the cart with provided ID
-//     Cart.findById(req.params.id).populate("comments").populate({
-//         path: "reviews",
-//         options: {sort: {createdAt: -1}}
-//     }).exec(function (err, foundCart) {
-//         if (err) {
-//             console.log(err);
-//         } else {
-//             //render show template with that cart
-//             res.render("carts/show", {cart: foundCart});
-//         }
-//     });
-// });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 //SHOW CART  -shows more info about one CART
@@ -156,21 +180,6 @@ router.get("/:id", function(req,res) {
     });
 
  });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -232,12 +241,6 @@ router.delete("/:id", middleware.checkCartOwnership, function (req, res) {
         }
     });
 });
-
-
-
-
-
-
 
 
 //DESTROY CART ROUTE

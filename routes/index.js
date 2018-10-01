@@ -8,17 +8,10 @@ var async = require("async");
 var nodemailer = require("nodemailer");
 var crypto = require("crypto");
 const sgMail = require("@sendgrid/mail");
+var Notification = require("../models/notification");
+var { isLoggedIn } = require('../middleware');
 sgMail.setApiKey('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');
 
-
-//const { isLoggedIn } = require('../middleware')
-//const userController = require('../controllers/userController')
-
-// FOR MAILGUN
-// var api_key = '';
-// var domain = '';
-// var mailgun = require('mailgun-js')({apikey: api_key, domain: domain});
-//
 
 
 //ROOT ROUTE
@@ -382,6 +375,64 @@ router.get("/users/:id", function(req, res){
 
     });
 });
+
+
+
+// user profile
+router.get('/users/notify/:id', async function(req, res) {
+    try {
+      let user = await User.findById(req.params.id).populate('followers').exec();
+      res.render('profile', { user });
+    } catch(err) {
+      req.flash('error', err.message);
+      return res.redirect('back');
+    }
+  });
+  
+  // follow user
+  router.get('/follow/:id', isLoggedIn, async function(req, res) {
+    try {
+      let user = await User.findById(req.params.id);
+      user.followers.push(req.user._id);
+      user.save();
+      req.flash('success', 'Successfully bookmarked for notification ' + user.username + '!');
+      res.redirect('/users/notify/' + req.params.id);
+    } catch(err) {
+      req.flash('error', err.message);
+      res.redirect('back');
+    }
+  });
+  
+  // view all notifications
+  router.get('/notifications', isLoggedIn, async function(req, res) {
+    try {
+      let user = await User.findById(req.user._id).populate({
+        path: 'notifications',
+        options: { sort: { "_id": -1 } }
+      }).exec();
+      let allNotifications = user.notifications;
+      res.render('notifications/index', { allNotifications });
+    } catch(err) {
+      req.flash('error', err.message);
+      res.redirect('back');
+    }
+  });
+  
+  // handle notification
+  router.get('/notifications/:id', isLoggedIn, async function(req, res) {
+    try {
+      let notification = await Notification.findById(req.params.id);
+      notification.isRead = true;
+      notification.save();
+      res.redirect(`/carts/${notification.cartId}`);
+    } catch(err) {
+      req.flash('error', err.message);
+      res.redirect('back');                     
+    }
+  });
+  
+  
+  
 
 module.exports = router;
 

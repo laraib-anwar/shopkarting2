@@ -47,8 +47,11 @@
                         <hr>
                         
                         <p>
-                            <em>Submitted By: <a href = "/users/<%= cart.author.id %>"><%= cart.author.username %></a>, <%= moment(cart.createdAt).fromNow() %></em>
+                            Submitted By: <a href = "/users/<%= cart.author.id %>"><%= cart.author.username %></a>, <%= moment(cart.createdAt).format('MMM Do YYYY') %></em>
                         </p>
+                        <p><a href = "/users/notify/<%= cart.author.id %>">See the notifications.</a></p>
+                        
+                        
                         <% if(currentUser && cart.author.id.equals(currentUser._id)){%>
                         <a class = "btn  btn-danger" href = "/carts/<%= cart._id %>/edit">Edit</a>
                         <form id = "delete-form" action = "/carts/<%= cart._id %>?_method=DELETE" method = "POST">
@@ -163,7 +166,7 @@
                 <div class ="col-md-12">
 
                 <strong><%= comment.author.username %></strong>
-                <span class = "pull-right"><%= moment(comment.createdAt).fromNow() %></span>
+                <span class = "pull-right"><%= moment(comment.createdAt).format('MMM Do YYYY') %></span>
                 <p>
                 <%= comment.text %>
                 </p>
