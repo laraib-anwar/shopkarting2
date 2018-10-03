@@ -1,14 +1,34 @@
 var mongoose = require("mongoose");
 var passportLocalMongoose = require("passport-local-mongoose");
 var bcrypt = require("bcrypt-nodejs");
-
+var validator = require("validator");
 var UserSchema = new mongoose.Schema({
-    username: String,
-    password: String,
-    avatar: String,
+    username: {
+        type:String,
+        required: true,
+        minlength: 1
+    },
+    password: {
+        type:String,
+        required: true,
+        minlength: 4
+    },
+    //avatar: String,
     firstName: String,
     lastName: String,
-    email: {type: String, unique: true},
+    email: {
+        type: String, 
+        unique: true, 
+        required: true, 
+        minlength: 1, 
+        trim: true,
+        validate: {
+            validator: validator.isEmail,
+            message: '{VALUE} is not a valid email'
+        }
+    
+    
+    },
     resetPasswordToken: String,
     resetPasswordExpires: Date,
     verifyToken: String,

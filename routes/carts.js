@@ -74,47 +74,8 @@ router.post("/", middleware.isLoggedIn, upload.single('image'), async function(r
             id: req.user._id,
             username: req.user.username
         };
-
-        // Cart.create(req.body.cart, function(err, cart) {
-        //     if (err) {
-        //         req.flash('error', err.message);
-        //         return res.redirect('back');
-        //     }
-        //     //try {
-        //         //let cart = await Cart.create(req.body.cart);
-        //         //let user = await User.findById(req.user._id).populate('followers').exec();
-        //         User.findById(req.user._id).populate('followers').exec(function (err, foundUser) {
-        //             if(err){
-        //                 console.log(err);
-        //             }
-        //             else{
-
-        //             }
-        //         });
-            
-        //         let newNotification = {
-        //           username: req.user.username,
-        //           cartId: cart.id
-        //         }
-        //         for(const follower of user.followers) {
-        //           let notification = await Notification.create(newNotification);
-        //           follower.notifications.push(notification);
-        //           follower.save();
-        //         } 
-          
-        //         //redirect back to carts page
-        //         res.redirect(`/carts/${cart.id}`);
-        //       //}
-        //     //    catch(err) {
-        //     //     req.flash('error', err.message);
-        //     //     res.redirect('back');
-        //     //   }
-        //     //res.redirect('/carts/' + cart.id);
-        // });
-
         
         
-       
         try {
             let cart = await Cart.create(req.body.cart);
             let user = await User.findById(req.user._id).populate('followers').exec();
@@ -137,18 +98,6 @@ router.post("/", middleware.isLoggedIn, upload.single('image'), async function(r
 
     });
 });
-
-
-
-
- // Cart.create(req.body.cart, function(err, cart) {
-        //     if (err) {
-        //         req.flash('error', err.message);
-        //         return res.redirect('back');
-        //     }
-        //     res.redirect('/carts/' + cart.id);
-        // });
-
 
 
 //NEW SHOW FORM TO CREATE A CART
@@ -241,20 +190,6 @@ router.delete("/:id", middleware.checkCartOwnership, function (req, res) {
         }
     });
 });
-
-
-//DESTROY CART ROUTE
-// router.delete("/:id",  middleware.checkCartOwnership, function(req, res){
-//     //destroy cart
-//     Cart.findByIdAndRemove(req.params.id, function(err){
-//         if(err){
-//             res.redirect("/carts");
-//         }
-//         else{
-//             res.redirect("/carts");
-//         }
-//     });
-// });
 
 
 function escapeRegex(text){

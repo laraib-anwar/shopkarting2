@@ -208,7 +208,7 @@ router.post('/forgot', function(req, res, next) {
                     // user: 'laraib.anwar919@gmail.com',
                     // pass: 'laraibforislam'
 
-                    user: 'shopkart',
+                     user: 'shopkart',
                     pass: 'laraib@123'
                 }
             });
@@ -360,7 +360,7 @@ router.get('/verify/:token', function(req, res) {
 
 //USER PROFILE
 router.get("/users/:id", function(req, res){
-    User.findById(req.params.id, function(err, foundUser){
+    User.findById(req.params.id).populate('followers').exec(function(err, foundUser){
         if(err){
             req.flash("error", "Something went wrong");
             res.redirect("/");
@@ -378,16 +378,35 @@ router.get("/users/:id", function(req, res){
 
 
 
-// user profile
-router.get('/users/notify/:id', async function(req, res) {
-    try {
-      let user = await User.findById(req.params.id).populate('followers').exec();
-      res.render('profile', { user });
-    } catch(err) {
-      req.flash('error', err.message);
-      return res.redirect('back');
-    }
-  });
+
+// // user profile
+// router.get('/users/notify/:id', async function(req, res) {
+//     try {
+//       let user = await User.findById(req.params.id).populate('followers').exec();
+//       res.render('profile', { user });
+//     } catch(err) {
+//       req.flash('error', err.message);
+//       return res.redirect('back');
+//     }
+//   });
+
+
+
+
+// follow user
+// router.get('/follow/:id', isLoggedIn, async function(req, res) {
+//     try {
+//       let user = await User.findById(req.params.id);
+//       user.followers.push(req.user._id);
+//       user.save();
+//       req.flash('success', 'Successfully bookmarked for notification ' + user.username + '!');
+//       res.redirect('/users/notify/' + req.params.id);
+//     } catch(err) {
+//       req.flash('error', err.message);
+//       res.redirect('back');
+//     }
+//   });
+  
   
   // follow user
   router.get('/follow/:id', isLoggedIn, async function(req, res) {
@@ -395,8 +414,8 @@ router.get('/users/notify/:id', async function(req, res) {
       let user = await User.findById(req.params.id);
       user.followers.push(req.user._id);
       user.save();
-      req.flash('success', 'Successfully bookmarked for notification ' + user.username + '!');
-      res.redirect('/users/notify/' + req.params.id);
+      req.flash('success', 'Successfully bookmarked for notifications from' + user.username + '!');
+      res.redirect('/users/' + req.params.id);
     } catch(err) {
       req.flash('error', err.message);
       res.redirect('back');
@@ -430,6 +449,20 @@ router.get('/users/notify/:id', async function(req, res) {
       res.redirect('back');                     
     }
   });
+
+
+  // handle notification
+//   router.get('/notifications/:id', isLoggedIn, async function(req, res) {
+//     try {
+//       let notification = await Notification.findById(req.params.id);
+//       notification.isRead = true;
+//       notification.save();
+//       res.redirect(`/carts/${notification.commentId}`);
+//     } catch(err) {
+//       req.flash('error', err.message);
+//       res.redirect('back');                     
+//     }
+//   });
   
   
   

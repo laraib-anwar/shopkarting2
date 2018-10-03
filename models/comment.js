@@ -1,7 +1,11 @@
 var mongoose = require("mongoose");
 
 var commentSchema = new mongoose.Schema({
-    text: String,
+    text: {
+        type: String,
+        required: true,
+        minlength: 1
+    },
     createdAt: {type: Date, default: Date.now()},
     author: {
         id: {

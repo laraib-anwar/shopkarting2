@@ -3,11 +3,20 @@ var Comment = require("./comment");
 var Review = require("./review");
 
 var cartSchema = new mongoose.Schema({
-    name: String,
-    image: String,
+    name: {
+        type: String,
+        required: true
+    },
+    image: {
+        type: String,
+        required: true
+    },
     imageId: String,
     description: String,
-    price: Number,
+    price: {
+        type: Number,
+        required: true
+    },
     like: Number,
     createdAt: {type: Date, default: Date.now()},
     author: {

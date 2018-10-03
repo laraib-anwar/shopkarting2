@@ -6,9 +6,11 @@
 	<% allNotifications.forEach(function(notification) { %>
 	<li>
 		<a href="/carts/<%= notification.cartId %>">
-			<%= notification.username %> created a new  %>
+			<%= notification.username %> created a new Product %>
 		</a>
 	</li>
+
+	
 	<% }); %>
 </ul>
 

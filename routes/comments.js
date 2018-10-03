@@ -22,7 +22,7 @@ router.get("/new", function(req, res){                   // after "/", put this 
 
             res.render("carts/show", {cart: cart});
         }
-    });
+    }); 
 
 });
 
@@ -30,7 +30,7 @@ router.get("/new", function(req, res){                   // after "/", put this 
 
 
 //COMMENTS CREATE
-router.post("/",  function(req, res){      // after "/", put this one-middleware.isLoggedIn,
+router.post("/",  function(req, res){   
     //find the cart with provideed id
     Cart.findById(req.params.id, function(err, cart){
         if (err) {
@@ -70,7 +70,47 @@ router.post("/",  function(req, res){      // after "/", put this one-middleware
 
 
 
+// //COMMENTS CREATE
+// router.post("/",  async function(req, res){   
+//     //find the cart with provideed id
+    
+//         try {
+//             let cart = await Cart.findById(req.params.id);
+//              //add username and id to the coment
+//              comment.author.id = req.user._id;
+//              comment.author.username = req.user.username;
+//              console.log(comment.author.username);
 
+         
+//             let comment = await Comment.create(req.body.text);
+                   
+//                     //save comment
+//                     comment.save();
+//                     cart.comments.push(comment);
+//                     cart.save();
+//                     console.log(comment);
+//                     req.flash("success", "Successfully added comment!!");
+//                     let user = await User.findById(req.user._id).populate('followers').exec();
+//                     let newNotification = {
+//                     username: req.user.username,
+//                     commentId: comment.id
+//                     }
+//                     for(const follower of user.followers) {
+//                     let notification = await Notification.create(newNotification);
+//                     follower.notifications.push(notification);
+//                     follower.save();
+//                     }
+      
+//                     res.redirect('/carts/' + cart._id);
+//                 } catch (err) {
+//                     console.log(err);
+//                     res.redirect("/carts");
+//                 }
+//             });
+        
+
+        
+    
 
 
 //COMMENT DESTROY ROUTE
@@ -85,24 +125,5 @@ router.delete("/:comment_id", middleware.checkCommentOwnership, function(req, re
         }
     });
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 module.exports = router;
