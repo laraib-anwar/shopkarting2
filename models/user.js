@@ -2,6 +2,7 @@ var mongoose = require("mongoose");
 var passportLocalMongoose = require("passport-local-mongoose");
 var bcrypt = require("bcrypt-nodejs");
 var validator = require("validator");
+var expressValidator = require("express-validator");
 var UserSchema = new mongoose.Schema({
     username: {
         type:String,
@@ -21,13 +22,7 @@ var UserSchema = new mongoose.Schema({
         unique: true, 
         required: true, 
         minlength: 1, 
-        trim: true,
-        validate: {
-            validator: validator.isEmail,
-            message: '{VALUE} is not a valid email'
-        }
-    
-    
+        trim: true
     },
     resetPasswordToken: String,
     resetPasswordExpires: Date,

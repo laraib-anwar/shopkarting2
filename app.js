@@ -16,7 +16,7 @@ var FacebookStrategy = require('passport-facebook').Strategy;
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 var morgan = require('morgan');
 MongoClient = require('mongodb').MongoClient;
-
+var expressValidator = require("express-validator");
 
 var configDB 		 = require('./config/database.js');
 
@@ -58,10 +58,42 @@ app.use(express.static(__dirname + "/public"));
 app.set("view engine","ejs");
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
+
+
+
+//Exress Validator middleware
+app.use(expressValidator({
+    errorFormatter: function(param, msg, value) {
+        var namespace = param.split('.');
+            root = namespace.shift();
+            formParam = root;
+
+        while(namespace.length) {
+            formatter +=  '[' + namespace.shift() + ']';
+
+        }
+
+        return {
+            param: formParam,
+            msg: msg,
+            value: value
+        };
+    }
+}));
+
+
+
+
+
 app.use(cookieParser());
 app.use(methodOverride("_method"));
 app.use(flash());
 app.locals.moment =  require("moment");
+
+
+
+
+
 
 
 //set up our express appication

@@ -29,6 +29,17 @@ router.get("/register", function(req, res){
 
 //handling user sign up
 router.post("/register", function(req, res){
+    req.checkBody('email', 'Invalid email. Please ensure your email is correct!').isEmail();
+    req.checkBody('password', 'Invalid Password must be atleast four characters!').notEmpty().isLength({min:4});
+    var errors = req.validationErrors();
+    if (errors) {
+        var messages = [];
+        errors.forEach(function(err) {
+            messages.push(err.msg);
+            req.flash("error", err.msg);
+            res.redirect("/register");
+        });
+    }
     token = crypto.randomBytes(20).toString('hex');
     var newUser = new User(
         {
