@@ -131,7 +131,15 @@
             <!--comments section-->
             <div class = "well">
             <div class ="text-right">
+
+                    
+                   
                 <% if(currentUser && cart.author.id.equals(currentUser._id)){%>
+                    <a class="btn btn-success" href="/chat">See Your chat logs <%= cart.author.username %></a>
+                    
+                    <p><hr> or </hr></p>
+
+
                 <form action="/carts/<%= cart._id %>/comments" method="POST">
                 <div class="form-group">
                 <label for="text">Post your class details or  phone number for the buyer to contact you:</label>
@@ -143,6 +151,8 @@
                 </form>
 
                 <% } else if(currentUser){%>
+                    <a class="btn btn-success" href="/chat">Chat with <%= cart.author.username %></a>
+                    <p><hr> or </hr></p>
                 <form action="/carts/<%= cart._id %>/comments" method="POST">
                 <div class="form-group">
                 <label for="text">Ask the seller:</label>
@@ -154,6 +164,8 @@
                 </form>
 
                 <% } else {%>
+                    <a class="btn btn-success" href="/chat">Chat with <%= cart.author.username %></a>
+                    <p><hr> or </hr></p>
                 <div class="form-group">
                 <label for="text">Get <a href="/login">logged in </a>inorder to comment</label>
                 </div>

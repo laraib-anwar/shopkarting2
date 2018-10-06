@@ -366,6 +366,30 @@ router.get('/verify/:token', function(req, res) {
 });
 
 
+//chat route
+
+router.get("/chat", isLoggedIn, function(req, res){
+    res.render("index"); 
+ });
+
+
+
+
+
+
+
+ function isLoggedIn(req, res, next){
+    if(req.isAuthenticated()){
+        return next();
+    }
+    req.flash('error', 'You must be signed in to do that!');
+    res.redirect('/login');
+}
+
+
+
+
+
 
 
 
