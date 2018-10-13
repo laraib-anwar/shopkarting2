@@ -90,6 +90,7 @@ router.post("/", middleware.isLoggedIn, upload.single('image'), async function(r
             }
       
             //redirect back to carts page
+            req.flash('success', 'Successfully uploaded. Scroll below to see your post.');
             res.redirect(`/carts/${cart.id}`);
           } catch(err) {
             req.flash('error', err.message);

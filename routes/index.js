@@ -107,7 +107,8 @@ router.get("/login", function(req, res){
 router.post("/login",passport.authenticate("local",
     {
         successRedirect: "/carts",
-        failureRedirect: "/login"
+        failureRedirect: "/login",
+        successFlash: "Welcome! You are successfully logged in!"
     }), function(req, res){
 });
 
@@ -394,7 +395,7 @@ router.get("/users/:id/chat", isLoggedIn, function(req, res){
 
 
 //USER PROFILE
-router.get("/users/:id", function(req, res){
+router.get("/users/:id", isLoggedIn, function(req, res){
     User.findById(req.params.id).populate('followers').exec(function(err, foundUser){
         if(err){
             req.flash("error", "Something went wrong");
