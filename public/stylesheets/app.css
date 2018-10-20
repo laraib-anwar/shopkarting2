@@ -1,4 +1,4 @@
-html{
+/* html{
     height: 100%;
     overflow: hidden;
     font: normal 16px sans-serif;
@@ -149,4 +149,7 @@ header nav li {
     font-weight: bolder;
 }
 
-
+ */
+.enable-notifications {
+    display: none;
+}
