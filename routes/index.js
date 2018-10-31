@@ -411,7 +411,7 @@ router.get('/verify/:token', function(req, res) {
 
 
 //USER PROFILE
-router.get("/users/:id", isLoggedIn, function(req, res){
+router.get("/users/:id", function(req, res){
     User.findById(req.params.id).populate('followers').exec(function(err, foundUser){
         if(err){
             req.flash("error", "Something went wrong");
@@ -466,7 +466,7 @@ router.get("/users/:id", isLoggedIn, function(req, res){
       let user = await User.findById(req.params.id);
       user.followers.push(req.user._id);
       user.save();
-      req.flash('success', 'Successfully bookmarked for notifications from' + user.username + '!');
+      req.flash('success', 'Successfully bookmarked for notifications from ' + user.username + '!');
       res.redirect('/users/' + req.params.id);
     } catch(err) {
       req.flash('error', err.message);
