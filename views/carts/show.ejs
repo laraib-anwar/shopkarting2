@@ -135,7 +135,7 @@
                     
                    
                 <% if(currentUser && cart.author.id.equals(currentUser._id)){%>
-                    <a class="btn btn-success" href="/users/<%= cart.author.id %>/chat">See Your chat logs <%= cart.author.username %></a>
+                    <a class="btn btn-success" href="/carts/<%= cart.author.id %>/chat">See Your chat logs <%= cart.author.username %></a>
                     
                     <p><hr> or </hr></p>
 
@@ -151,7 +151,7 @@
                 </form>
 
                 <% } else if(currentUser){%>
-                    <a class="btn btn-success" href="/users/<%= cart.author.id %>/chat">Chat with <%= cart.author.username %></a>
+                    <a class="btn btn-success" href="/carts/<%= cart._id %>/chat">Chat with <%= cart.author.username %></a>
                     <p><hr> or </hr></p>
                 <form action="/carts/<%= cart._id %>/comments" method="POST">
                 <div class="form-group">
@@ -164,7 +164,7 @@
                 </form>
 
                 <% } else {%>
-                    <a class="btn btn-success" href="/users/<%= cart.author.id %>/chat">Chat with <%= cart.author.username %></a>
+                    <a class="btn btn-success" href="/carts/<%= cart.author.id %>/chat">Chat with <%= cart.author.username %></a>
                     <p><hr> or </hr></p>
                 <div class="form-group">
                 <label for="text">Get <a href="/login">logged in </a>inorder to comment</label>

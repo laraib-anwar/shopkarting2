@@ -7,10 +7,10 @@ var Cart = require("../models/cart");
 var async = require("async");
 var nodemailer = require("nodemailer");
 var crypto = require("crypto");
-const sgMail = require("@sendgrid/mail");
+const sgMail = require("@sendgrid/mail");//
 var Notification = require("../models/notification");
 var { isLoggedIn } = require('../middleware');
-sgMail.setApiKey('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');
+sgMail.setApiKey('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');//
 
 
 
@@ -47,6 +47,7 @@ router.post("/register", function(req, res){
             name: req.body.name,
             email: req.body.email,
             avatar: req.body.avatar,
+            phone: req.body.phone,
             verifyToken: token,
             active: false
         });
@@ -369,11 +370,26 @@ router.get('/verify/:token', function(req, res) {
 
 //chat route
 
-router.get("/users/:id/chat", isLoggedIn, function(req, res){
-    res.render("index"); 
- });
+// router.get("/users/:id/chat", isLoggedIn, function(req, res){
+//     res.render("index"); 
+//  });
 
 
+
+
+ //chat
+ 
+//chat
+// router.get("/:id/chat", isLoggedIn, function(req, res){
+//     Cart.findById(req.params.id, function(err, foundCart){
+//       if(err){
+//         res.redirect("/carts")
+//       } else {
+//         res.render("index", {cart: foundCart})
+//       }
+  
+//   });
+//   });
 
 
 

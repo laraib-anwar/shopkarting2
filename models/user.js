@@ -24,6 +24,7 @@ var UserSchema = new mongoose.Schema({
         minlength: 1, 
         trim: true
     },
+    phone: 'string',
     resetPasswordToken: String,
     resetPasswordExpires: Date,
     verifyToken: String,

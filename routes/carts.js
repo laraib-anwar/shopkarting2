@@ -200,4 +200,32 @@ function escapeRegex(text){
 
 
 
+
+//chat
+router.get("/:id/chat", isLoggedIn, function(req, res){
+    Cart.findById(req.params.id, function(err, foundCart){
+      if(err){
+        res.redirect("/carts")
+      } else {
+        res.render("index", {cart: foundCart})
+      }
+  
+  });
+  });
+
+
+
+
+  function isLoggedIn(req, res, next){
+    if(req.isAuthenticated()){
+        return next();
+    }
+    req.flash('error', 'You must be signed in to do that!');
+    res.redirect('/login');
+}
+
+
+
+
+
 module.exports = router;

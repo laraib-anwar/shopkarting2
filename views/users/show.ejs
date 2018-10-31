@@ -11,10 +11,16 @@
                             font-size: 100%;
                             font-style: bold;
                         }
+                        .fa-phone {
+                            color: green;
+                        }
                         
                         </style>
                         
                         <h1><%= user.username %>'s profile</h1>
+                        <% if(user.phone !== '') {%>
+                        <i class = "fa fa-phone"><a href = "<%= user.phone %>"><p><%= user.phone %></p></a></i>
+                        <% } %>
                         
                         <a href="/follow/<%= user.id %>"><button class="btn btn-primary">Bookmark <%= user.username %> to get notifications..</button></a>
                         

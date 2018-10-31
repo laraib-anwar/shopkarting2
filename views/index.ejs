@@ -18,12 +18,14 @@
         <div class="form-field">
           <h3>Join a Chat</h3></div>
         <div class="form-field">
-          <label>Display Name</label>
-          <input type="text" name="name" autofocus />
+          <label>Your Name</label>
+          <!-- <input type="text" name="name" autofocus /> -->
+          <input name="name" value = "<%= currentUser.username %>"  />
         </div>
         <div class="form-field">
-          <label>Please enter Image Uploader's Username</label>
-          <input type="text" name="room" />
+          <label> Uploader's Username</label>
+          <!-- <input type="text" name="room" /> -->
+          <input type="text" name="room" value = "<%= cart.author.username %>" />
         </div>
         <div class="form-field">
           <button>Join</button>
