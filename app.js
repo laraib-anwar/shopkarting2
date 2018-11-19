@@ -41,10 +41,6 @@ const publicPath = path.join(__dirname, '../public');
 
 
 
-
-
-
-
 mongoose.set('debug', true);
 
 // connect to the database
