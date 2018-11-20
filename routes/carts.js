@@ -171,7 +171,7 @@ router.delete("/:id", middleware.checkCartOwnership, function (req, res) {
             res.redirect("/carts");
         } else {
             // deletes all comments associated with the cart
-            Comment.remove({"_id": {$in: cart.comments}}, function (err) {
+            Cart.remove({"_id": {$in: cart.comments}}, function (err) {
                 if (err) {
                     console.log(err);
                     return res.redirect("/carts");
