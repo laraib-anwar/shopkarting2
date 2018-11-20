@@ -54,8 +54,10 @@
                         
                         <% if(currentUser && cart.author.id.equals(currentUser._id)){%>
                         <a class = "btn  btn-danger" href = "/carts/<%= cart._id %>/edit">Edit</a>
+
+                        
                         <form id = "delete-form" action = "/carts/<%= cart._id %>?_method=DELETE" method = "POST">
-                        <button type="button" class="btn btn-warning">Delete</button>
+                        <input type="submit" class="btn btn-warning" value = "Delete">
                         </form>
                         <% }%>
                         <div style="margin-top: 10px;">
