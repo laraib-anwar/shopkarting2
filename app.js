@@ -1,4 +1,5 @@
 var express = require("express");
+var dotenv = require("dotenv");
 var app = express();
 var bodyParser = require("body-parser");
 var mongoose = require("mongoose");
@@ -36,7 +37,7 @@ const path = require('path');
 const publicPath = path.join(__dirname, '../public');
 
 
-
+dotenv.config();
   
 
 
