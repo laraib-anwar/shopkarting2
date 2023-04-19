@@ -45,15 +45,17 @@ dotenv.config();
 mongoose.set('debug', true);
 
 // connect to the database
-mongoose.connect(configDB.url);
-mongoose.Promise = Promise;
+// mongoose.connect(configDB.url);
+// mongoose.Promise = Promise;
 
 //MongoClient.connect("mongodb://localhost:27017/shopping_cart", { useNewUrlParser: true });
 
 
 
 
-//mongoose.connect("mongodb://laraib:laraib.anwara1@ds147461.mlab.com:47461/shopkart" );
+mongoose.connect(
+  "mongodb+srv://laraib:iloveislam@campustalk.0t1ub.mongodb.net/shopkart?retryWrites=true&w=majority"
+);
 //mongoose.connect("mongodb://localhost/shopping_cart");
 require('./config/passport')(passport);
 
